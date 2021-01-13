@@ -30,6 +30,7 @@ class PendingCalls {
         // PendingCalls();
         // ~PendingCalls();
         void StoreCall(Call * call);
-        Call GetCallWithId(string & id);
+        bool GetCallActionWithId(string & id, string & action);
+
 };
 

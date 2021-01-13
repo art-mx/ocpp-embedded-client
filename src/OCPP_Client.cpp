@@ -33,11 +33,15 @@ void OCPP_Client::Update(){
 void OCPP_Client::ProcessCallResult(struct jsonrpc_request *r) {
     string id;
     string payload;
+    string action;
+
     if(!GetUniqueId(r, id)) return;
     if(!GetPayload(r, payload)) return; //TODO handle null
-    Call call = pending_calls_->GetCallWithId(id);
-    jsonrpc_return_success(r, "%Q %Q %Q", "got result for id", id.c_str(), payload.c_str());
-    // pending_calls_
+    bool result = pending_calls_->GetCallActionWithId(id, action);
+    if (result)
+        jsonrpc_return_success(r, "%Q %Q %Q %Q", "got result for id", id.c_str(), payload.c_str(), action);
+    else jsonrpc_return_error(r, result, "Unknown response", payload.c_str());
+
     // TODO handle result
 }
 
