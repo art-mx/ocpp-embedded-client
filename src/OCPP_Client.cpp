@@ -3,30 +3,30 @@
 
 using std::string;
 
-OCPP_Client * client;
-
-
-void ocpp_cb(struct jsonrpc_request *r) {
-    client->ProcessMessage(r);
+void OCPP_Client::ocpp_cb(struct jsonrpc_request *r) {
+    auto *self = static_cast<OCPP_Client *>(r->userdata);
+    self->ProcessMessage(r);
 }
 
 // Gets called by the RPC engine to send a reply frame
-int Sender(const char *frame, int frame_len, void *privdata) {
+int OCPP_Client::Sender(const char *frame, int frame_len, void *privdata) {
   return Serial1.write(frame, frame_len);
 }
 
 OCPP_Client::OCPP_Client(){
-    
-    pending_calls_ = new PendingCalls;
+    pending_calls_ = new PendingCalls();
     boot_notification_req = new BootNotificationReq();
-    jsonrpc_export("OCPP.Message", ocpp_cb, NULL);
 
     Call * call = new Call(boot_notification_req->Action, boot_notification_req->GetPayload());
     SendCall(call);
+
+    jsonrpc_ctx_init(&ctx, NULL, NULL);
+    jsonrpc_ctx_export(&ctx, "OCPP.Message", OCPP_Client::ocpp_cb, this);
 }
 
 void OCPP_Client::Update(){
-    if (Serial1.available() > 0) jsonrpc_process_byte(Serial1.read(), Sender, NULL);
+    if (Serial1.available() > 0) 
+        jsonrpc_ctx_process_byte(&ctx, Serial1.read(), OCPP_Client::Sender, NULL);
 }
 
 
@@ -36,18 +36,16 @@ void OCPP_Client::ProcessCallResult(struct jsonrpc_request *r) {
     string action;
 
     if(!GetUniqueId(r, id)) return;
-    if(!GetPayload(r, payload)) return; //TODO handle null
+    if(!GetPayload(r, payload)) return; // TODO handle null
     bool result = pending_calls_->GetCallActionWithId(id, action);
-    if (result)
-        jsonrpc_return_success(r, "%Q %Q %Q %Q", "got result for id", id.c_str(), payload.c_str(), action);
-    else jsonrpc_return_error(r, result, "Unknown response", payload.c_str());
 
+    if (result)
+        jsonrpc_return_success(r, "%s %s %s %s", "got result for id", id.c_str(), payload.c_str(), action);
+    else jsonrpc_return_error(r, result, "Unknown response", payload.c_str());
     // TODO handle result
 }
 
-void OCPP_Client::ProcessCallError(struct jsonrpc_request *r) {
-
-}
+void OCPP_Client::ProcessCallError(struct jsonrpc_request *r) {}
 
 void OCPP_Client::SendCall(Call * call) {
     // send the call
@@ -62,9 +60,9 @@ bool OCPP_Client::GetUniqueId(struct jsonrpc_request *r, string & UniqueId) {
     if (result == 0) {
         jsonrpc_return_error(r, result, "Failed to parse the request", NULL);
         return false;
-  }
-  UniqueId = buff;
-  return true;
+    }
+    UniqueId = buff;
+    return true;
 }
 
 bool OCPP_Client::GetPayload(struct jsonrpc_request *r, string & Payload) {
@@ -82,13 +80,15 @@ bool OCPP_Client::GetPayload(struct jsonrpc_request *r, string & Payload) {
 
 void OCPP_Client::ProcessMessage(struct jsonrpc_request *r) {
     double MessageTypeId;
+
     if (!mjson_get_number(r->params, r->params_len, "$[0]", &MessageTypeId))  
         return;
+
     if (MessageTypeId == CALLRESULT) {
         ProcessCallResult(r);
     }
+
     if (MessageTypeId == CALLERROR) {
         ProcessCallError(r);
-        
     }
 }

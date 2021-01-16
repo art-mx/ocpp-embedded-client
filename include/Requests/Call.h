@@ -24,11 +24,10 @@ class Call {
 };
 
 class PendingCalls {
-    private:
-        vector<Call> call_list_;
     public:
-        // PendingCalls();
-        // ~PendingCalls();
+        PendingCalls()  {} ;
+        ~PendingCalls() = default;
+        vector<Call*> call_list_;
         void StoreCall(Call * call);
         bool GetCallActionWithId(string & id, string & action);
 
