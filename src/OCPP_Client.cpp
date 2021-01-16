@@ -57,6 +57,7 @@ void OCPP_Client::ProcessCallResult(struct jsonrpc_request *r) {
 
 
 
+>>>>>>> src/OCPP_Client.cpp
     // TODO handle result
 }
 
