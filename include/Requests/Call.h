@@ -26,10 +26,11 @@ class Call {
         /*
         * [<MessageTypeId>, "<UniqueId>", "<Action>", {<Payload>}]
         */
-        const char * call_format = "[%d, %Q, %Q, %Q]";
-        int GenerateUniqueId() {
+        const char * call_format = "[%d, %Q, %Q, %s]\n";
+        string GenerateUniqueId() {
             static int i = 0;
-            return ++i;
+            ++i;
+            return to_string(i);
         }
 };
 

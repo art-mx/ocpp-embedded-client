@@ -11,7 +11,7 @@ void setup() {
   pinMode(ERROR_LED, OUTPUT);
   
   Serial1.begin(9600);
-  Serial1.println("SPLC-T1 ready");
+  // Serial1.println("SPLC-T1 ready");
   client = new OCPP_Client();
 }
 
