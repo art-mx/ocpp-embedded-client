@@ -37,7 +37,6 @@ void OCPP_Client::Update(){
 }
 
 
-
 void OCPP_Client::ProcessCallResult(struct jsonrpc_request *r) {
     string id;
     string payload;
@@ -52,13 +51,7 @@ void OCPP_Client::ProcessCallResult(struct jsonrpc_request *r) {
     }
     jsonrpc_return_success(r, "%Q %Q %Q %Q", "got result for id", id.c_str(), payload.c_str(), action); 
 
-    if (action == "BootNotification") boot_notification_conf->Parse(payload);
-
-
-
-
->>>>>>> src/OCPP_Client.cpp
-    // TODO handle result
+    // if (action == "BootNotification") boot_notification_conf->Parse(payload);
 }
 
 void OCPP_Client::ProcessCallError(struct jsonrpc_request *r) {}

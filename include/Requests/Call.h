@@ -39,8 +39,6 @@ class PendingCalls {
         vector<Call*> call_list_;
         // map<string, string> call_map_;
     public:
-        std::vector<Call*> call_list_;
-
         PendingCalls()  {} ;
         ~PendingCalls() = default;
         void StoreCall(Call * call);
