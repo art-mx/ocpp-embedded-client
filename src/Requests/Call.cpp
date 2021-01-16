@@ -26,7 +26,7 @@ bool PendingCalls::GetCallActionWithId(string & id, string & action) {
             delete pointer_to_deleted;
             return true;
         }
-    }
+    } 
     return false;
 }
 

@@ -3,7 +3,7 @@
 #include "OCPP_Client.h"
 
 
-extern OCPP_Client * client;
+OCPP_Client * client;
 
 void setup() {
   pinMode(STATUS_LED, OUTPUT);
