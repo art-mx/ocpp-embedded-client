@@ -2,6 +2,7 @@
 #include "mjson.h"
 #include "Requests/Call.h"
 #include "Requests/BootNotificationReq.h"
+#include "Requests/BootNotificationConf.h"
 
 #pragma once 
 #define CALL 2
@@ -19,6 +20,8 @@ class OCPP_Client {
     static int Sender(const char* frame, int frame_len, void* privdata);
     OCPP_Client();
     ~OCPP_Client();
+    
+
     void ProcessMessage(struct jsonrpc_request *r);
     void SendCall(Call * call);
     void ProcessCallResult(struct jsonrpc_request *r);
@@ -28,4 +31,6 @@ class OCPP_Client {
     void Update();
     PendingCalls * pending_calls_;
     BootNotificationReq * boot_notification_req;
+    BootNotificationConf * boot_notification_conf;
+    Call * call;
 };
