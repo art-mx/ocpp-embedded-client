@@ -5,13 +5,6 @@ Call::Call(string action, string payload): Action(action), Payload(payload) {
     UniqueId = GenerateUniqueId();
 }
 
-// struct CallInfo {
-//     string Action;
-//     string UniqueId;
-// };
-
-// PendingCalls::PendingCalls(){};
-
 void PendingCalls::StoreCall(Call * call) {
     call_list_.emplace_back(call);
 }
