@@ -13,10 +13,17 @@ int OCPP_Client::Sender(const char *frame, int frame_len, void *privdata) {
   return Serial1.write(frame, frame_len);
 }
 
-OCPP_Client::OCPP_Client(){
-    pending_calls_ = new PendingCalls();
-    boot_notification_req = new BootNotificationReq();
 
+OCPP_Client::OCPP_Client(){
+    // jsonrpc_ctx_init(&ctx, emptyfunc, nullptr);
+    jsonrpc_ctx_init(&ctx, &CTXInitCallback, NULL);
+
+    pending_calls_ = new PendingCalls;
+    boot_notification_req = new BootNotificationReq();
+    boot_notification_conf = new BootNotificationConf();
+    // call = new Call();
+    jsonrpc_ctx_export(&ctx, "OCPP.Message", ocpp_cb, this);
+    
     Call * call = new Call(boot_notification_req->Action, boot_notification_req->GetPayload());
     SendCall(call);
 
@@ -30,6 +37,7 @@ void OCPP_Client::Update(){
 }
 
 
+
 void OCPP_Client::ProcessCallResult(struct jsonrpc_request *r) {
     string id;
     string payload;
@@ -38,10 +46,17 @@ void OCPP_Client::ProcessCallResult(struct jsonrpc_request *r) {
     if(!GetUniqueId(r, id)) return;
     if(!GetPayload(r, payload)) return; // TODO handle null
     bool result = pending_calls_->GetCallActionWithId(id, action);
+    if (!result) {
+        jsonrpc_return_error(r, result, "Unknown response", payload.c_str());
+        return;
+    }
+    jsonrpc_return_success(r, "%Q %Q %Q %Q", "got result for id", id.c_str(), payload.c_str(), action); 
 
-    if (result)
-        jsonrpc_return_success(r, "%s %s %s %s", "got result for id", id.c_str(), payload.c_str(), action);
-    else jsonrpc_return_error(r, result, "Unknown response", payload.c_str());
+    if (action == "BootNotification") boot_notification_conf->Parse(payload);
+
+
+
+
     // TODO handle result
 }
 

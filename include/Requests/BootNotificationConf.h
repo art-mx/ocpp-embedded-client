@@ -1,7 +1,7 @@
-// #include "Requests/Request.h"
+#include <string>
 
-// class BootNotificationConf: public Request {
-//     public:
-//         static void RequestHandler(const std::string payload);
-// }
+
+struct BootNotificationConf{
+    void Parse(std::string & payload);
+};
 
