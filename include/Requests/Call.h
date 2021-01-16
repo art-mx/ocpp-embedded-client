@@ -25,9 +25,10 @@ class Call {
 
 class PendingCalls {
     public:
+        std::vector<Call*> call_list_;
+
         PendingCalls()  {} ;
         ~PendingCalls() = default;
-        vector<Call*> call_list_;
         void StoreCall(Call * call);
         bool GetCallActionWithId(string & id, string & action);
 

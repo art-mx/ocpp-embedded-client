@@ -38,7 +38,7 @@ void OCPP_Client::ProcessCallResult(struct jsonrpc_request *r) {
     if(!GetUniqueId(r, id)) return;
     if(!GetPayload(r, payload)) return; // TODO handle null
     bool result = pending_calls_->GetCallActionWithId(id, action);
-
+    // Serial1.println(pending_calls_->call_list_.size());
     if (result)
         jsonrpc_return_success(r, "%s %s %s %s", "got result for id", id.c_str(), payload.c_str(), action);
     else jsonrpc_return_error(r, result, "Unknown response", payload.c_str());
