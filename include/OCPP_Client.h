@@ -11,23 +11,23 @@
 using std::string;
 
 
-
 class OCPP_Client {
   public:
     struct jsonrpc_ctx ctx;
-    static void ocpp_cb(struct jsonrpc_request *r);
-    static int CTXInitCallback(const char *buf, int len, void *pivate_data) {};
-    static int Sender(const char* frame, int frame_len, void* privdata);
+    // static void ocpp_cb(struct jsonrpc_request *r);
+    // static int CTXInitCallback(const char *buf, int len, void *pivate_data) {};
+    // static int Sender(const char* frame, int frame_len, void* privdata);
     OCPP_Client();
     ~OCPP_Client();
     
-
-    void ProcessMessage(struct jsonrpc_request *r);
+    void SendBootNotification();
+    void ProcessMessage(string &msg);
     void SendCall(Call * call);
-    void ProcessCallResult(struct jsonrpc_request *r);
-    void ProcessCallError(struct jsonrpc_request *r);
-    static bool GetUniqueId(struct jsonrpc_request *r, string & UniqueId);
-    static bool GetPayload(struct jsonrpc_request *r, string & Payload);
+    void ProcessCallResult(string & msg);
+    void ProcessCallError(string & msg);
+    void ProcessCall(string & msg);
+    static bool GetUniqueId(string & msg, string & UniqueId);
+    static bool GetPayload(string & msg, string & Payload);
     void Update();
     PendingCalls * pending_calls_;
     BootNotificationReq * boot_notification_req;

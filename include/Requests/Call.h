@@ -43,6 +43,7 @@ class PendingCalls {
         ~PendingCalls() = default;
         void StoreCall(Call * call);
         bool GetCallActionWithId(string & id, string & action);
+        void Update();
 
 };
 
