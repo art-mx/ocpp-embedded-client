@@ -8,11 +8,20 @@ Call::Call(string action, string payload): Action(action), Payload(payload) {
 }
 
 void PendingCalls::Update() {
+    // logser.println(call_list_.capacity());
     if (call_list_.size()>MAX_CALL_NUM) {
+        logser.println(call_list_.size());
         logser.println("reached MAX_CALL_NUM!");
         Call * pointer_to_deleted = *(call_list_.begin());
         call_list_.erase(call_list_.begin());  
         delete pointer_to_deleted;
+    }
+    if (call_list_.size()>MAX_CALL_NUM) {
+        // check timeout for pending call
+        // if timeout:
+        // inc n++
+        // send again
+        // if n>3 handle coom issue - light fault led
     }
 }
 

@@ -1,16 +1,21 @@
 #include <Arduino.h>
-#include "OCPP_Client.h"
+#include "Device.h" 
+
 
 #define F091
 // #define F103
 
-OCPP_Client * client;
+
+
 #ifdef F091
   HardwareSerial logser(PA3, PA2);
 #endif
 HardwareSerial comser(PA10, PA9);
 // HardwareSerial Serial4(PC11, PC10);
 uint32_t currentTime;
+
+Device * device;
+OCPP_Client * client;
 
 void setup() {
 
@@ -21,18 +26,20 @@ void setup() {
   comser.begin(115200);
   logser.println("Serial 2 up");
   // Serial4.begin(9600);
-  jsonrpc_init(NULL, NULL);
   
-  client = new OCPP_Client();
-  client->SendBootNotification();
+  // device = new Device();
+  // client = new OCPP_Client();
+  // device->SetClient(client);
+  // client->SetDevice(device);
+  // client->SendBootNotification();
 }
 
 void loop() {
-  client->Update();
+  // client->Update();
   
-  if ((millis() - currentTime) > 100) {
+  if ((millis() - currentTime) > 10) {
     currentTime = millis();
-    client->SendBootNotification();
+    // client->SendBootNotification();
     logser.println(millis());
   }
 

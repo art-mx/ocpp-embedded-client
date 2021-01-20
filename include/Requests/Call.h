@@ -1,8 +1,9 @@
+#pragma once
+
 #include <Arduino.h>
 #include <vector>
 #include <map>
-
-#pragma once
+#include <memory>
 
 using namespace std;
 
@@ -17,8 +18,7 @@ class Call {
     public:
         Call(string Action, string Payload);
         Call();
-        // Call& operator=(Call&&);
-        // ~Call();
+        ~Call() = default;
         const uint8_t MessageTypeId = 2;
         string Action;
         string UniqueId;
@@ -36,15 +36,14 @@ class Call {
 
 class PendingCalls {
     private:
-        vector<Call*> call_list_;
+        vector<Call *> call_list_;
         // map<string, string> call_map_;
     public:
-        PendingCalls()  {} ;
+        PendingCalls() {}
         ~PendingCalls() = default;
-        void StoreCall(Call * call);
+        void StoreCall(Call* call);
         bool GetCallActionWithId(string & id, string & action);
         void Update();
-
 };
 
 

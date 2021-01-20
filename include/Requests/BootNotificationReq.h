@@ -1,6 +1,6 @@
+#pragma once
 #include <Arduino.h>
 #include "Call.h"
-#pragma once
 extern "C" {
   #include "mjson.h"
 }

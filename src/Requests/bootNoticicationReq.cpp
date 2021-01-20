@@ -9,10 +9,13 @@ BootNotificationReq::BootNotificationReq() {
 }
 
 string BootNotificationReq::GetPayload() {
-  char *s = NULL;
-  mjson_printf(&mjson_print_dynamic_buf, &s, payload_format,
+  char * buf = NULL;
+  mjson_printf(&mjson_print_dynamic_buf, &buf, payload_format,
                 "chargePointVendor", chargePointVendor_.c_str(),
                 "chargePointModel", chargePointModel_.c_str()
               );
-  return s;
+
+  string payload(buf, strlen(buf));
+  free(buf);
+  return payload;
 }
