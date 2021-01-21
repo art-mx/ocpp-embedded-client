@@ -38,7 +38,7 @@ void loop() {
   device->Update();
   
   if ((millis() - currentTime) > 5000) {
-    logser.printf("\r\n\r\nruntime: %i", millis());
+    logser.printf("\r\n\r\nruntime: %i\r\n", millis());
     currentTime = millis();
     device->client_->SendBootNotification();
     

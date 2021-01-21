@@ -51,7 +51,7 @@ void OCPP_Client::Update(){
         buf[len++] = ch;
         int res = check_if_frame_is_complete(buf, len, msg);
         if(res>0) {
-            logser.println(msg.c_str());
+            // logser.println(msg.c_str());
             std::fill_n(buf, 200, 0);
             len = 0;
             ProcessMessage(msg);
@@ -63,10 +63,9 @@ void OCPP_Client::Update(){
 void OCPP_Client::ProcessCall(string & msg) {
     string payload;
     if(!GetPayload(msg, payload)) {
-        logser.println("Payload not found!");
+        logser.printf("Payload not foundin message %s\r\n", msg.c_str());
         return;
     }
-    logser.println(msg.c_str());
 }
 
 void OCPP_Client::ProcessCallResult(string & msg) {
@@ -94,8 +93,7 @@ void OCPP_Client::ProcessCallError(string & msg) {
 void OCPP_Client::SendCall(Call* call) {
     // send the call
     mjson_printf(Sender, NULL, call->call_format, call->MessageTypeId, call->UniqueId.c_str(), call->Action.c_str(), call->Payload.c_str());
-    logser.print("sent msg");
-    logser.println(call->UniqueId.c_str());
+    logser.printf("sent %s with id %s, payload: %s\r\n", call->Action.c_str(), call->UniqueId.c_str(), call->Payload.c_str());
     pending_calls_->StoreCall(call);
     
 }
