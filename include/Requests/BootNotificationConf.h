@@ -1,7 +1,7 @@
 #pragma once
 #include "Requests/Message.h"
 #include "Device.h"
-#include "States/Operational.h"
+#include "States/Available.h"
 
 class BootNotificationConf : public Message {
     public:

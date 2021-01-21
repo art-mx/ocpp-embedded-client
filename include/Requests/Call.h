@@ -4,22 +4,19 @@
 #include <vector>
 #include <map>
 #include <memory>
-
+#include "Types/Types.h"
+#include "Requests/Message.h"
+#include "Requests/Call.h"
 using namespace std;
 
 #define MAX_CALL_NUM 10 // number of calls to store
 
-struct CallInfo {
-    string Action;
-    string UniqueId;
-};
-
-class Call {
+class Call{
     public:
         Call(string Action, string Payload);
         Call();
         ~Call() = default;
-        const uint8_t MessageTypeId = 2;
+        const uint8_t MessageTypeId = MessageType::CALL;
         string Action;
         string UniqueId;
         string Payload;
@@ -45,24 +42,4 @@ class PendingCalls {
         bool GetCallActionWithId(string & id, string & action);
         void Update();
 };
-
-
-
-// BootNotificationConf * BootNotificationConf;
-// Msg2 * Msg2;
-
-// Conf list[20] = {BootNotificationConf, Msg2};
-
-// enum_val = CallActionsMap[action];
-// list(enum_val).parse(payload);
-
-// enum CallActions {
-//     BOOT_NOTIFICATION=0,
-//     MSG2=1
-// };
-
-// static std::map<std::string, CallActions> CallActionsMap = {
-//    { "BootNotification", BOOT_NOTIFICATION},
-
-// };
 

@@ -35,8 +35,32 @@ enum RegistrationStatus {
     REJECTED = 3
 };
 
+
 static std::map<std::string, RegistrationStatus> RegistrationStatusMap = {
    {"Accepted", ACCEPTED},
    {"Rending", PENDING},
    {"Refected", REJECTED}
+};
+
+enum MessageType {
+    CALL = 2,
+    CALLRESULT = 3,
+    CALLERROR = 4
+};
+
+enum MessageAction {
+    BOOT_NOTIFICATION = 1,
+    CHANGE_AVAILABILITY = 2
+
+
+};
+
+static std::map<std::string, MessageAction> MessageNamesMap = {
+   {"BootNotification", BOOT_NOTIFICATION},
+   {"ChangeAvailability", CHANGE_AVAILABILITY}
+};
+
+enum AvailabilityType {
+    INOPERATIVE = 1,
+    OPERATIVE = 2
 };

@@ -2,7 +2,7 @@
 #include "States/State.h"
 
 
-class Operational : public State {
+class Available : public State {
  public:
   void HandleRegistrationStatusAccepted();
   void HandleTimerChange();

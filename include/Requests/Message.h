@@ -5,7 +5,6 @@ extern "C" {
 }
 #include <string>
 #include "Types/Types.h"
-#include <stdexcept>
 
 class Device;
 extern HardwareSerial logser;

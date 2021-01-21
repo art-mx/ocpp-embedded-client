@@ -20,7 +20,7 @@ class BootNotificationReq {
     public:
         BootNotificationReq();
         // ~BootNotificationReq();
-        string GetPayload();
+        string Payload();
         const string Action = "BootNotification";
 
         /*

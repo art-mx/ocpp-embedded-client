@@ -10,7 +10,7 @@ Call::Call(string action, string payload): Action(action), Payload(payload) {
 void PendingCalls::Update() {
     // logser.println(call_list_.capacity());
     if (call_list_.size()>MAX_CALL_NUM) {
-        logser.printf("size: %s - reached MAX_CALL_NUM!", call_list_.size());
+        logser.printf("size: %s - reached MAX_CALL_NUM!\r\n", call_list_.size());
         Call * pointer_to_deleted = *(call_list_.begin());
         call_list_.erase(call_list_.begin());  
         delete pointer_to_deleted;

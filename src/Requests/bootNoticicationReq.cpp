@@ -8,7 +8,7 @@ BootNotificationReq::BootNotificationReq() {
   chargePointVendor_ = "Y"; // TODO
 }
 
-string BootNotificationReq::GetPayload() {
+string BootNotificationReq::Payload() {
   char * buf = NULL;
   mjson_printf(&mjson_print_dynamic_buf, &buf, payload_format,
                 "chargePointVendor", chargePointVendor_.c_str(),
