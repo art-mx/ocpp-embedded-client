@@ -14,7 +14,7 @@ class State {
   public:
     virtual ~State() {}
     void SetContext(Device* context) ;
-    virtual const char * GetStateName();
+    virtual const std::string GetStateName();
     uint32_t GetTimerValue();
     void UpdateTimerValue();
     virtual void HandleRegistrationStatusAccepted();

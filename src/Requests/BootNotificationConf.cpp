@@ -1,7 +1,7 @@
 #include "Requests/BootNotificationConf.h"
 
 
-void BootNotificationConf::MessageHandler(std::string & payload) {
+void BootNotificationConf::MessageHandler(std::string & payload, Device * device) {
     string status_str;
     if(!GetString(payload, "$.status", status_str)) {
         logser.println("cannot find 'status' key in payload");
@@ -11,7 +11,7 @@ void BootNotificationConf::MessageHandler(std::string & payload) {
     switch (status) {
         case ACCEPTED:
             logser.println("got ACCEPTED RegistrationStatus");
-            // device->ChangeState(new Operational);
+            device->state_->HandleRegistrationStatusAccepted();
             // handle this
             break;
         case PENDING:

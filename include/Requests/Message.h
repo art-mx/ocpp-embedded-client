@@ -6,14 +6,13 @@ extern "C" {
 #include <string>
 #include "Types/Types.h"
 #include <stdexcept>
-#include "Device.h"
 
-
+class Device;
 extern HardwareSerial logser;
 
 class Message {
  public:
-  static void MessageHandler(struct jsonrpc_request *r) {
+  static void MessageHandler(std::string & payload, Device * device) {
     // SendErrorResponse(r, "message not implemented");
   } // override this in child classes
   static void PayloadHandler(const std::string payload) {} 

@@ -1,7 +1,7 @@
 #include "States/Initialization.h"
 #include "States/Operational.h"
 
-const char* Operational::GetStateName() {
+const std::string Operational::GetStateName() {
   return "Operational";
 }
 

@@ -1,6 +1,6 @@
 #include <Arduino.h>
 #include "Device.h" 
-
+#include "OCPP_Client.h"
 
 #define F091
 // #define F103
@@ -27,20 +27,21 @@ void setup() {
   logser.println("Serial 2 up");
   // Serial4.begin(9600);
   
-  // device = new Device();
-  // client = new OCPP_Client();
-  // device->SetClient(client);
-  // client->SetDevice(device);
+  device = new Device();
+  client = new OCPP_Client();
+  device->SetClient(client);
+  client->SetDevice(device);
   // client->SendBootNotification();
 }
 
 void loop() {
-  // client->Update();
+  device->Update();
   
-  if ((millis() - currentTime) > 10) {
+  if ((millis() - currentTime) > 5000) {
+    logser.printf("\r\n\r\nruntime: %i", millis());
     currentTime = millis();
-    // client->SendBootNotification();
-    logser.println(millis());
+    device->client_->SendBootNotification();
+    
   }
 
 }

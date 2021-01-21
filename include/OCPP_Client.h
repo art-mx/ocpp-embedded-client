@@ -4,7 +4,6 @@
 #include "Requests/Call.h"
 #include "Requests/BootNotificationReq.h"
 #include "Requests/BootNotificationConf.h"
-#include "Device.h" 
 #define CALL 2
 #define CALLRESULT 3
 #define CALLERROR 4

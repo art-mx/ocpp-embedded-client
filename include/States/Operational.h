@@ -6,5 +6,5 @@ class Operational : public State {
  public:
   void HandleRegistrationStatusAccepted();
   void HandleTimerChange();
-  const char * GetStateName();
+  const std::string GetStateName();
 };

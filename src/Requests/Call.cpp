@@ -10,8 +10,7 @@ Call::Call(string action, string payload): Action(action), Payload(payload) {
 void PendingCalls::Update() {
     // logser.println(call_list_.capacity());
     if (call_list_.size()>MAX_CALL_NUM) {
-        logser.println(call_list_.size());
-        logser.println("reached MAX_CALL_NUM!");
+        logser.printf("size: %s - reached MAX_CALL_NUM!", call_list_.size());
         Call * pointer_to_deleted = *(call_list_.begin());
         call_list_.erase(call_list_.begin());  
         delete pointer_to_deleted;
@@ -21,7 +20,7 @@ void PendingCalls::Update() {
         // if timeout:
         // inc n++
         // send again
-        // if n>3 handle coom issue - light fault led
+        // if n>3 handle com issue - light fault led
     }
 }
 

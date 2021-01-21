@@ -30,7 +30,7 @@ OCPP_Client::OCPP_Client() {//(Device * device): device_(device){
     boot_notification_conf = new BootNotificationConf();
 }
 
-void OCPP_Client::setDevice(Device * device) {
+void OCPP_Client::SetDevice(Device * device) {
     device_ = device;
 }
 
@@ -71,18 +71,17 @@ void OCPP_Client::ProcessCall(string & msg) {
 
 void OCPP_Client::ProcessCallResult(string & msg) {
     string id;
-    string payload = "{\"status\":\"Accepted\",\"currentTime\":\"2021-01-19T19:07:39.537Z\",\"interval\":14400}";
+    string payload;
     string action;
 
     if(!GetUniqueId(msg, id)) return;
-    // if(!GetPayload(msg, payload)) return; // TODO handle null
+    if(!GetPayload(msg, payload)) return; // TODO handle null
 
     bool result = pending_calls_->GetCallActionWithId(id, action);
     if (result) {
-        // logser.printf("got result for id:%s payload:%s action:%s", id.c_str(), payload.c_str(), action.c_str());
+        logser.printf("got result for id:%s payload:%s action: %s \r\n", id.c_str(), payload.c_str(), action.c_str());
         if (action == "BootNotification") {
-            logser.println("got response for BootNotification");
-            boot_notification_conf->MessageHandler(payload);
+            boot_notification_conf->MessageHandler(payload, device_);
         }
     }
     else logser.println("Unknown response");

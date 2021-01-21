@@ -2,8 +2,8 @@
 
 #include <Arduino.h>
 
-class State;
 class OCPP_Client;
+class State;
 
 class Device {
     public:
@@ -13,8 +13,8 @@ class Device {
         void ChangeState(State * state);
         void Update();
         OCPP_Client * client_{nullptr};
-    private:
         State * state_{nullptr};
+    private:
         
 };
 
