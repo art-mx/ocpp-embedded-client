@@ -1,6 +1,5 @@
 #include "Requests/BootNotificationConf.h"
 
-
 void BootNotificationConf::MessageHandler(std::string & payload, Device * device) {
     string status_str;
     if(!GetString(payload, "$.status", status_str)) {

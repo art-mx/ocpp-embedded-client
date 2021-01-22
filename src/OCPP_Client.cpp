@@ -5,9 +5,11 @@ extern HardwareSerial comser;
 extern HardwareSerial logser;
 
 
-OCPP_Client::OCPP_Client() {//(Device * device): device_(device){
+OCPP_Client::OCPP_Client() { //(Device * device): device_(device){
     jsonrpc_init(NULL, NULL);
     pending_calls_ = new PendingCalls();
+    Message * message = new Message();
+    CallResult * call_result = new CallResult();
     boot_notification_req = new BootNotificationReq();
     boot_notification_conf = new BootNotificationConf();
 }
@@ -37,6 +39,8 @@ void OCPP_Client::Update(){
             std::fill_n(buf, 200, 0);
             len = 0;
             ProcessMessage(msg);
+            // new Message(frame);
+            // MessageHandler();
         }        
     } 
     
@@ -71,10 +75,11 @@ void OCPP_Client::ProcessCallResult(string & msg) {
         action = MessageNamesMap[action_str];
         switch (action) {
             case BOOT_NOTIFICATION:
-                boot_notification_conf->MessageHandler(payload, device_);
+                // boot_notification_conf->MessageHandler(payload, device_);
                 break;
-            // case CHANGE_AVAILABILITY:
-                
+            case CHANGE_AVAILABILITY:
+                // handle this
+                break;
         }
     }
     else logser.println("Unknown response");
@@ -86,7 +91,7 @@ void OCPP_Client::ProcessCallError(string & msg) {
 
 void OCPP_Client::SendCall(Call* call) {
     // send the call
-    mjson_printf(Sender, NULL, call->call_format, call->MessageTypeId, call->UniqueId.c_str(), call->Action.c_str(), call->Payload.c_str());
+    mjson_printf(Sender, NULL, call->format, call->MessageTypeId, call->UniqueId.c_str(), call->Action.c_str(), call->Payload.c_str());
     logser.printf("sent %s with id %s, payload: %s\r\n", call->Action.c_str(), call->UniqueId.c_str(), call->Payload.c_str());
     pending_calls_->StoreCall(call);
 }

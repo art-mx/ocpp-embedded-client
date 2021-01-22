@@ -5,8 +5,9 @@ extern "C" {
   #include "mjson.h"
 }
 using namespace std;
+#include "Requests/Call.h"
 
-class BootNotificationReq {
+class BootNotificationReq{
     private:
         string chargePointModel_;
         string chargePointVendor_;

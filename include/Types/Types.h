@@ -51,8 +51,6 @@ enum MessageType {
 enum MessageAction {
     BOOT_NOTIFICATION = 1,
     CHANGE_AVAILABILITY = 2
-
-
 };
 
 static std::map<std::string, MessageAction> MessageNamesMap = {
@@ -63,4 +61,9 @@ static std::map<std::string, MessageAction> MessageNamesMap = {
 enum AvailabilityType {
     INOPERATIVE = 1,
     OPERATIVE = 2
+};
+
+static std::map<std::string, uint8_t> MessageFieldPositionMap = {
+   {"UniqueId", 0},
+   {"ChangeAvailability", CHANGE_AVAILABILITY}
 };
