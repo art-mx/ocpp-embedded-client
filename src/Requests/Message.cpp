@@ -6,7 +6,7 @@ string & Message::Handle(string & msg) {
     int id;
     double raw_value;
 
-    if (!mjson_get_number(msg.c_str(), msg.length(), "$[0]", &raw_value)) {
+    if (!mjson_get_number(msg.c_str(), msg.length(), MessageTypeId_key, &raw_value)) {
         logser.println("message type not found");
         return msg;
     }

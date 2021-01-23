@@ -1,7 +1,7 @@
 #include "Requests/BootNotificationReq.h"
 
 
-using namespace std;
+using std::string;
 
 BootNotificationReq::BootNotificationReq() {
   chargePointModel_ = "X"; // TODO

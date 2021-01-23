@@ -5,9 +5,7 @@
 #include <map>
 #include <memory>
 #include "Types/Types.h"
-// #include "Requests/CallResult.h"
-#include "Requests/PendingCalls.h"
-#include "Requests/Message.h" 
+
 using namespace std;
 
 #define MAX_CALL_NUM 10 // number of calls to store

@@ -3,16 +3,20 @@
 #include "mjson.h"
 #include "Requests/PendingCalls.h"
 #include "Requests/BootNotificationReq.h"
-#include "Requests/BootNotificationConf.h"
+// #include "Requests/BootNotificationConf.h"
 #include "Requests/Message.h"
+#include "Requests/CallResult.h"
+#include "Requests/Call.h" 
+#include "Requests/CallError.h"
 #include "JSONParser.h"
+
 
 using std::string;
 
 int Sender(const char *frame, int frame_len, void *privdata);
 
 class Device;
-// class Message;
+class Message;
 
 class OCPP_Client {
   public:
@@ -38,7 +42,7 @@ class OCPP_Client {
     // static bool GetCallAction(string & msg, string & action);
     void Update();
     PendingCalls * pending_calls_;
-    // BootNotificationReq * boot_notification_req;
+    BootNotificationReq * boot_notification_req;
     // BootNotificationConf * boot_notification_conf;
     Message * message;
 

@@ -1,7 +1,7 @@
 #pragma once
 #include <Arduino.h>
 using std::string;
-
+#include "Device.h"
 extern HardwareSerial logser;
 
 
@@ -15,6 +15,7 @@ public:
     // Device * device_;
     virtual Handler *SetNext(Handler *handler) = 0;
     virtual string & Handle(string & msg) = 0;
+    virtual void SetDevice(Device * device) = 0;
 
 };
 
@@ -23,24 +24,24 @@ class AbstractHandler : public Handler {
  private:
   Handler *next_handler_;
  public:
-  // Device * device_;
-  // AbstractHandler(Device * device) :  next_handler_(nullptr), device_(device) {}
+  Device * device_;
+  void SetDevice(Device * device) override { 
+    device_= device;
+  }
   AbstractHandler() : next_handler_(nullptr) {}
 
   virtual ~AbstractHandler() = default;
 
   Handler *SetNext(Handler *handler) override {
     this->next_handler_ = handler;
-    // AbstractHandler::next_handler_->device_ = device_;
+    this->next_handler_->SetDevice(device_);
     return handler;
   }
 
   string & Handle(string & msg) override {
     if (this->next_handler_) {
       Handler* next = this->next_handler_;
-      // if (this->device_ != nullptr) {
-      //   logser.println(next->device_->bla);
-      // }
+
       // delete this;
       return next->Handle(msg);
     }

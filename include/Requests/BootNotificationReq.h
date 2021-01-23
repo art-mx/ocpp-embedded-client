@@ -4,7 +4,7 @@
 extern "C" {
   #include "mjson.h"
 }
-using namespace std;
+using std::string;
 #include "Requests/AbstractHandler.h"
 
 class BootNotificationReq : public AbstractHandler {

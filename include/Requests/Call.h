@@ -13,7 +13,6 @@ using namespace std;
 #define MAX_CALL_NUM 10 // number of calls to store
 
 extern HardwareSerial logser;
-extern Device * device;
 
 class Call : public AbstractHandler {
     public:

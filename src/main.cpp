@@ -39,13 +39,13 @@ void setup() {
 }
 
 void loop() {
-  // device->Update();
-  client->Update();
+  device->Update();
+  // client->Update();
   
   if ((millis() - currentTime) > 5000) {
     logser.printf("\r\n\r\nruntime: %i\r\n", millis());
     currentTime = millis();
-    // device->client_->SendBootNotification(); 
+    device->client_->SendBootNotification(); 
     // client->SendBootNotification(); 
   }
 }

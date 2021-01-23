@@ -1,5 +1,5 @@
 #pragma once
-// #include "Requests/CallResult.h"
+
 #include "Device.h"
 #include "States/Available.h"
 #include "Requests/AbstractHandler.h"
@@ -8,11 +8,11 @@
 
 class BootNotificationConf : public AbstractHandler {
     public:
-        // BootNotificationConf(CallResult const& c) : CallResult(c) {}
-        // BootNotificationConf();
+
+        const char * Payload_key = "$[2]";
         string currentTime;
         int interval;
         RegistrationStatus status;
-        void MessageHandler(std::string & payload, Device * device);
+        string & Handle(std::string & payload) override;
 };
 

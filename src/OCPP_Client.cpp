@@ -10,12 +10,13 @@ OCPP_Client::OCPP_Client() { //(Device * device): device_(device){
     
     // CallResult * call_result = new CallResult();
     pending_calls_ = new PendingCalls();
-    // boot_notification_req = new BootNotificationReq();
+    boot_notification_req = new BootNotificationReq();
     // boot_notification_conf = new BootNotificationConf();
 
     message = new Message();
-    string msg = "[2,\"b39d8e77-7353-4534-949a-0966dd102661\",\"ChangeAvailability\",{\"connectorId\":0,\"type\":\"Operative\"}]";
-    message->Handle(msg);
+    message->SetDevice(device_);
+    // string msg = "[2,\"b39d8e77-7353-4534-949a-0966dd102661\",\"ChangeAvailability\",{\"connectorId\":0,\"type\":\"Operative\"}]";
+    // message->Handle(msg);
 }
 
 void OCPP_Client::SetDevice(Device * device) {
@@ -23,8 +24,8 @@ void OCPP_Client::SetDevice(Device * device) {
 }
 
 void OCPP_Client::SendBootNotification() {
-    // PendingCall *call = new PendingCall(boot_notification_req->Action, boot_notification_req->Payload());
-    // SendCall(call);
+    PendingCall *call = new PendingCall(boot_notification_req->Action, boot_notification_req->Payload());
+    SendCall(call);
 }
 
 void OCPP_Client::Update(){
