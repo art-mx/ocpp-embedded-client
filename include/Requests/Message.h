@@ -17,9 +17,8 @@ extern HardwareSerial logser;
 
 class Message : public AbstractHandler {
     public:
-        Message() {};
         // ~Message() = default;
-
+      // Message(Device * device): AbstractHandler(device) {} 
         // these two have the same position in any message
         const char * MessageTypeId_key = "$[0]";
         const char * UniqueId_key = "$[1]";

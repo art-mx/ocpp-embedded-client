@@ -9,7 +9,7 @@
 class BootNotificationConf : public AbstractHandler {
     public:
         // BootNotificationConf(CallResult const& c) : CallResult(c) {}
-        BootNotificationConf();
+        // BootNotificationConf();
         string currentTime;
         int interval;
         RegistrationStatus status;

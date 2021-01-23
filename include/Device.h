@@ -7,6 +7,7 @@ class State;
 
 class Device {
     public:
+        int bla{23};
         Device();
         ~Device();
         void SetClient(OCPP_Client * client);

@@ -5,16 +5,20 @@
 #define F091
 // #define F103
 
-
-
 #ifdef F091
   HardwareSerial logser(PA3, PA2);
 #endif
-HardwareSerial comser(PA10, PA9);
+  HardwareSerial comser(PA10, PA9);
+
+
+// #ifdef F091
+//   HardwareSerial logser(PA3, PA2);
+// #endif
+// HardwareSerial comser(PA10, PA9);
 // HardwareSerial Serial4(PC11, PC10);
 uint32_t currentTime;
 
-// Device * device;
+Device * device;
 OCPP_Client * client;
 
 void setup() {
@@ -27,10 +31,10 @@ void setup() {
   logser.println("Serial 2 up");
   // Serial4.begin(9600);
   
-  // device = new Device();
+  device = new Device();
   client = new OCPP_Client();
-  // device->SetClient(client);
-  // client->SetDevice(device);
+  device->SetClient(client);
+  client->SetDevice(device);
   // client->SendBootNotification();
 }
 

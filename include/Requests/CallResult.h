@@ -5,14 +5,15 @@
 #include "Types/Types.h"
 #include "JSONParser.h"
 #include "PendingCalls.h"
+#include "Device.h"
 
 // class Device;
 extern HardwareSerial logser;
+extern Device * device;
 
 class CallResult : public AbstractHandler {
   public:
 
-    CallResult() {};
     /*
     * [<MessageTypeId>, "<MessageId>", {<Payload>}]
     */

@@ -7,14 +7,17 @@
 #include "Types/Types.h"
 #include "Requests/AbstractHandler.h"
 #include "JSONParser.h"
+#include "Device.h"
 
 using namespace std;
-extern HardwareSerial logser;
 #define MAX_CALL_NUM 10 // number of calls to store
+
+extern HardwareSerial logser;
+extern Device * device;
 
 class Call : public AbstractHandler {
     public:
-        Call() {};
+        // Call() {};
         string & Handle(string & msg) override;
         /*
         * [<MessageTypeId>, "<UniqueId>", "<Action>", {<Payload>}]

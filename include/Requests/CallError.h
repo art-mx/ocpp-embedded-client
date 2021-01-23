@@ -9,7 +9,6 @@ extern HardwareSerial logser;
 class CallError : public AbstractHandler {
   public:
 
-    CallError() {};
     /*
     * [<MessageTypeId>, "<UniqueId>", "<errorCode>", "<errorDescription>", {<errorDetails>}]
     */
