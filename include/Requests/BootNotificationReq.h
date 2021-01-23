@@ -1,13 +1,13 @@
 #pragma once
 #include <Arduino.h>
-#include "Call.h"
+
 extern "C" {
   #include "mjson.h"
 }
 using namespace std;
-#include "Requests/Call.h"
+#include "Requests/AbstractHandler.h"
 
-class BootNotificationReq{
+class BootNotificationReq : public AbstractHandler {
     private:
         string chargePointModel_;
         string chargePointVendor_;
@@ -28,4 +28,5 @@ class BootNotificationReq{
         * {"chargePointModel": "modelX", "chargePointVendor": "vendorX"}
         */
         const char * payload_format = "{%Q: %Q, %Q: %Q}";
+        // string & Handle(string & msg);
 };

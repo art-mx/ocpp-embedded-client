@@ -5,28 +5,26 @@
 #include <map>
 #include <memory>
 #include "Types/Types.h"
-// #include "Requests/CallResult.h"
-#include "Requests/Call.h"
-#include "Requests/Message.h" 
-using namespace std;
+#include "Requests/AbstractHandler.h"
+#include "JSONParser.h"
 
+using namespace std;
+extern HardwareSerial logser;
 #define MAX_CALL_NUM 10 // number of calls to store
 
-class Call : public Message {
+class Call : public AbstractHandler {
     public:
-        Call(string Action, string Payload);
-        Call();
-        ~Call() = default;
-        const uint8_t MessageTypeId = MessageType::CALL;
-        string Action;
-        string UniqueId;
-        string Payload;
+        Call() {};
+        string & Handle(string & msg) override;
         /*
         * [<MessageTypeId>, "<UniqueId>", "<Action>", {<Payload>}]
         */
         const char * format = "[%d, %Q, %Q, %s]\n";
-        const char * Payload_key = "$[3]";
+        const char * MessageTypeId_key = "$[0]";
+        const char * UniqueId_key = "$[1]";
         const char * Action_key = "$[2]";
+        const char * Payload_key = "$[3]";
+
 
         string GenerateUniqueId() {
             static int i = 0;
@@ -35,15 +33,4 @@ class Call : public Message {
         }
 };
 
-class PendingCalls {
-    private:
-        vector<Call *> call_list_;
-        // map<string, string> call_map_;
-    public:
-        PendingCalls() {}
-        ~PendingCalls() = default;
-        void StoreCall(Call* call);
-        bool GetCallActionWithId(string & id, string & action);
-        void Update();
-};
 

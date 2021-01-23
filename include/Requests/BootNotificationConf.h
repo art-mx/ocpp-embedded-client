@@ -1,12 +1,15 @@
 #pragma once
-#include "Requests/CallResult.h"
+// #include "Requests/CallResult.h"
 #include "Device.h"
 #include "States/Available.h"
+#include "Requests/AbstractHandler.h"
+#include "Types/Types.h"
+#include "JSONParser.h"
 
-class BootNotificationConf : public CallResult {
+class BootNotificationConf : public AbstractHandler {
     public:
         // BootNotificationConf(CallResult const& c) : CallResult(c) {}
-        // BootNotificationConf() {}
+        BootNotificationConf();
         string currentTime;
         int interval;
         RegistrationStatus status;

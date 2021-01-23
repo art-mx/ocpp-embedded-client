@@ -14,7 +14,7 @@ HardwareSerial comser(PA10, PA9);
 // HardwareSerial Serial4(PC11, PC10);
 uint32_t currentTime;
 
-Device * device;
+// Device * device;
 OCPP_Client * client;
 
 void setup() {
@@ -27,21 +27,21 @@ void setup() {
   logser.println("Serial 2 up");
   // Serial4.begin(9600);
   
-  device = new Device();
+  // device = new Device();
   client = new OCPP_Client();
-  device->SetClient(client);
-  client->SetDevice(device);
+  // device->SetClient(client);
+  // client->SetDevice(device);
   // client->SendBootNotification();
 }
 
 void loop() {
-  device->Update();
+  // device->Update();
+  client->Update();
   
   if ((millis() - currentTime) > 5000) {
     logser.printf("\r\n\r\nruntime: %i\r\n", millis());
     currentTime = millis();
-    device->client_->SendBootNotification();
-    
+    // device->client_->SendBootNotification(); 
+    // client->SendBootNotification(); 
   }
-
 }

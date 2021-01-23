@@ -1,17 +1,18 @@
 #pragma once
 #include <Arduino.h>
 #include "mjson.h"
-#include "Requests/Call.h"
+#include "Requests/PendingCalls.h"
 #include "Requests/BootNotificationReq.h"
 #include "Requests/BootNotificationConf.h"
-#include "Types/Types.h"
+#include "Requests/Message.h"
+#include "JSONParser.h"
 
 using std::string;
 
-int check_if_frame_is_complete(char * buf, int len, string & frame);
 int Sender(const char *frame, int frame_len, void *privdata);
 
 class Device;
+// class Message;
 
 class OCPP_Client {
   public:
@@ -26,18 +27,19 @@ class OCPP_Client {
     void SetDevice(Device * device);
     uint32_t counter = 0;
     void SendBootNotification();
-    void ProcessMessage(string &msg);
-    void SendCall(Call * call);
-    void ProcessCallResult(string & msg);
-    void ProcessCallError(string & msg);
-    void ProcessCall(string & msg);
-    static bool GetUniqueId(string & msg, string & UniqueId);
-    static bool GetCallResultPayload(string & msg, string & Payload);
-    static bool GetCallPayload(string & msg, string & Payload);
-    static bool GetCallAction(string & msg, string & action);
+    // void ProcessMessage(string &msg);
+    void SendCall(PendingCall * call);
+    // void ProcessCallResult(string & msg);
+    // void ProcessCallError(string & msg);
+    // void ProcessCall(string & msg);
+    // static bool GetUniqueId(string & msg, string & UniqueId);
+    // static bool GetCallResultPayload(string & msg, string & Payload);
+    // static bool GetCallPayload(string & msg, string & Payload);
+    // static bool GetCallAction(string & msg, string & action);
     void Update();
     PendingCalls * pending_calls_;
-    BootNotificationReq * boot_notification_req;
-    BootNotificationConf * boot_notification_conf;
+    // BootNotificationReq * boot_notification_req;
+    // BootNotificationConf * boot_notification_conf;
+    Message * message;
 
 };

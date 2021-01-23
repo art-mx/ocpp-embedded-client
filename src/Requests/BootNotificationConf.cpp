@@ -10,7 +10,7 @@ void BootNotificationConf::MessageHandler(std::string & payload, Device * device
     switch (status) {
         case ACCEPTED:
             logser.println("got ACCEPTED RegistrationStatus");
-            device->state_->HandleRegistrationStatusAccepted();
+            // device->state_->HandleRegistrationStatusAccepted();
             // handle this
             break;
         case PENDING:
