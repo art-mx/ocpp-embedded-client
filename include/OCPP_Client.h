@@ -31,19 +31,11 @@ class OCPP_Client {
     void SetDevice(Device * device);
     uint32_t counter = 0;
     void SendBootNotification();
-    // void ProcessMessage(string &msg);
     void SendCall(PendingCall * call);
-    // void ProcessCallResult(string & msg);
-    // void ProcessCallError(string & msg);
-    // void ProcessCall(string & msg);
-    // static bool GetUniqueId(string & msg, string & UniqueId);
-    // static bool GetCallResultPayload(string & msg, string & Payload);
-    // static bool GetCallPayload(string & msg, string & Payload);
-    // static bool GetCallAction(string & msg, string & action);
+    void SendCallResult(Msg & msg); // TODO HERE
     void Update();
     PendingCalls * pending_calls_;
     BootNotificationReq * boot_notification_req;
-    // BootNotificationConf * boot_notification_conf;
     Message * message;
 
 };

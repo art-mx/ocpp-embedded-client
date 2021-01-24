@@ -17,5 +17,5 @@ class CallError : public AbstractHandler {
     const char * errorDescription_key = "$[3]";
     const char * errorDetails_key = "$[4]";
     // void MessageHandler(const string & payload, Device * device);
-    string & Handle(string & msg) override;
+    Msg Handle(Msg & msg) override;
 };

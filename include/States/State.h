@@ -1,7 +1,7 @@
 #pragma once
 #include <Arduino.h>
 #include "Device.h"
-// #include "OCPP_Client.h"
+#include "Types/Types.h"
 extern HardwareSerial logser;
 
 class Device;
@@ -17,6 +17,10 @@ class State {
     virtual const std::string GetStateName();
     uint32_t GetTimerValue();
     void UpdateTimerValue();
-    virtual void HandleRegistrationStatusAccepted();
+
+    virtual void StateHandle_RegistrationStatus(RegistrationStatus status);
+    virtual AvailabilityStatus StateHandle_AvailabilityStatus(AvailabilityType type);
+    // virtual void HandleRegistrationStatusRejected();
+    // virtual void HandleAvailabilityChange();
 
 };

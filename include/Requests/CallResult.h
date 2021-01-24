@@ -22,6 +22,6 @@ class CallResult : public AbstractHandler {
     const char * MessageTypeId_key = "$[0]";
     const char * UniqueId_key = "$[1]";
     const char * Payload_key = "$[2]";
-    string & Handle(string & msg) override;
+    Msg Handle(Msg & msg) override;
 };
 

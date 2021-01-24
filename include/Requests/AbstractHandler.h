@@ -3,10 +3,15 @@
 using std::string;
 #include "Device.h"
 extern HardwareSerial logser;
+#include "Types/Types.h"
 
-
-struct Request {
-    string raw_message;
+struct Msg {
+  string raw;
+  int type;
+  string uid;
+  string action;
+  string payload;
+  string response_payload;
 };
 
 
@@ -14,9 +19,9 @@ class Handler {
 public:
     // Device * device_;
     virtual Handler *SetNext(Handler *handler) = 0;
-    virtual string & Handle(string & msg) = 0;
+    virtual Msg Handle(Msg & msg) = 0;
     virtual void SetDevice(Device * device) = 0;
-
+    virtual ~Handler() = default;
 };
 
 
@@ -29,7 +34,8 @@ class AbstractHandler : public Handler {
     device_= device;
   }
   AbstractHandler() : next_handler_(nullptr) {}
-
+  
+  // https://wiki.sei.cmu.edu/confluence/display/cplusplus/OOP52-CPP.+Do+not+delete+a+polymorphic+object+without+a+virtual+destructor
   virtual ~AbstractHandler() = default;
 
   Handler *SetNext(Handler *handler) override {
@@ -38,10 +44,10 @@ class AbstractHandler : public Handler {
     return handler;
   }
 
-  string & Handle(string & msg) override {
+  Msg Handle(Msg & msg) override {
     if (this->next_handler_) {
       Handler* next = this->next_handler_;
-
+      // TODO
       // delete this;
       return next->Handle(msg);
     }

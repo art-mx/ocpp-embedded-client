@@ -1,6 +1,6 @@
 #include "Requests/CallError.h"
 
-string & CallError::Handle(string & msg) {
+Msg CallError::Handle(Msg & msg) {
     logser.println("handling CALLERROR");
     return msg;
 }

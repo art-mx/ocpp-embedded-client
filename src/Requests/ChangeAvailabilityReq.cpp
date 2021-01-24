@@ -1,22 +1,23 @@
 #include "Requests/ChangeAvailabilityReq.h"
+#include "Requests/ChangeAvailabilityConf.h"
 
-string & ChangeAvailabilityReq::Handle(string & msg) {
-    // int connectorId;
-    // AvailabilityType availability;
+Msg ChangeAvailabilityReq::Handle(Msg & msg) { //TODO change payload to OBJECT
+    int connectorId;
+    string availability_str;
+    AvailabilityType availability;
 
-    // // refactor this
-    // string payload;
-    // const char * Payload_key = "$[3]";
-    // if(!GetObject(msg, Payload_key, payload)) {
-    //     logser.printf("Payload not found in message %s\r\n", msg.c_str());
-    //     return msg;
-    // }
+    if (!GetInteger(msg.payload, "$.connectorId", &connectorId)){
+        logser.printf("'connectorId' key not found in payload %s\r\n", msg.payload.c_str());
+        return msg;
+    }
+    if (!GetString(msg.payload, "$.type", availability_str)) {
+        logser.printf("'type' key not found in payload %s\r\n", msg.payload.c_str());
+        return msg;
+    }
 
-    // if (!GetInteger(payload, Payload_key, &connectorId)){
-    //     logser.printf("connectorId not found in payload %s\r\n", payload.c_str());
-    // }
-    // return msg;
-
-    
+    availability = AvailabilityTypeNamesMap[availability_str];
+    AvailabilityStatus status = this->device_->state_->StateHandle_AvailabilityStatus(availability);
+    this->SetNext(new ChangeAvailabilityConf(status));
+    return AbstractHandler::Handle(msg);
     
 }

@@ -17,9 +17,8 @@ extern HardwareSerial logser;
 
 class Message : public AbstractHandler {
     public:
-
         const char * MessageTypeId_key = "$[0]";
         const char * UniqueId_key = "$[1]";
 
-        string & Handle(string & msg) override;
+        Msg Handle(Msg & msg) override;
 };

@@ -2,16 +2,15 @@
 
 using std::string;
 
-string & Message::Handle(string & msg) {
-    int id;
-    double raw_value;
+Msg Message::Handle(Msg & msg) {
 
-    if (!mjson_get_number(msg.c_str(), msg.length(), MessageTypeId_key, &raw_value)) {
+    double raw_value;
+    if (!mjson_get_number(msg.raw.c_str(), msg.raw.length(), MessageTypeId_key, &raw_value)) {
         logser.println("message type not found");
         return msg;
     }
-    id = static_cast<int>(raw_value);
-    switch (id) {
+    msg.type = static_cast<int>(raw_value);
+    switch (msg.type) {
         case CALLRESULT:
             logser.println("got CALLRESULT");
             this->SetNext(new CallResult());

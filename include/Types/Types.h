@@ -39,7 +39,7 @@ enum RegistrationStatus {
 static std::map<std::string, RegistrationStatus> RegistrationStatusMap = {
    {"Accepted", ACCEPTED},
    {"Rending", PENDING},
-   {"Refected", REJECTED}
+   {"Rejected", REJECTED}
 };
 
 enum MessageType {
@@ -48,13 +48,17 @@ enum MessageType {
     CALLERROR = 4
 };
 
-enum MessageAction {
+// TODO split into call actions and call result actions?
+enum MessageAction { 
     BOOT_NOTIFICATION = 1,
     CHANGE_AVAILABILITY = 2
 };
 
-static std::map<std::string, MessageAction> MessageNamesMap = {
-   {"BootNotification", BOOT_NOTIFICATION},
+static std::map<std::string, MessageAction> CallResultActionNamesMap = {
+   {"BootNotification", BOOT_NOTIFICATION}
+};
+
+static std::map<std::string, MessageAction> CallActionNamesMap = {
    {"ChangeAvailability", CHANGE_AVAILABILITY}
 };
 
@@ -63,7 +67,19 @@ enum AvailabilityType {
     OPERATIVE = 2
 };
 
-static std::map<std::string, uint8_t> MessageFieldPositionMap = {
-   {"UniqueId", 0},
-   {"ChangeAvailability", CHANGE_AVAILABILITY}
+static std::map<std::string, AvailabilityType> AvailabilityTypeNamesMap = {
+   {"Inoperative", INOPERATIVE},
+   {"Operative", OPERATIVE}
+};
+
+enum AvailabilityStatus {
+    AVAIL_STATUS_ACCEPTED = 1,
+    AVAIL_STATUS_REJECTED = 2,
+    AVAIL_STATUS_SCHEDULED = 3
+};
+
+static std::map<AvailabilityStatus, std::string> AvailabilityStatusNamesMap = {
+   {AVAIL_STATUS_ACCEPTED, "Accepted"},
+   {AVAIL_STATUS_SCHEDULED, "Scheduled"},
+   {AVAIL_STATUS_REJECTED, "Rejected"}
 };

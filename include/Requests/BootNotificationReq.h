@@ -5,9 +5,9 @@ extern "C" {
   #include "mjson.h"
 }
 using std::string;
-#include "Requests/AbstractHandler.h"
+// #include "Requests/AbstractHandler.h"
 
-class BootNotificationReq : public AbstractHandler {
+class BootNotificationReq {
     private:
         string chargePointModel_;
         string chargePointVendor_;
@@ -19,7 +19,7 @@ class BootNotificationReq : public AbstractHandler {
         string meterType_;
 
     public:
-        BootNotificationReq();
+        BootNotificationReq() {};
         // ~BootNotificationReq();
         string Payload();
         const string Action = "BootNotification";
