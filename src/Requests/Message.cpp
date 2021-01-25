@@ -12,15 +12,12 @@ Msg Message::Handle(Msg & msg) {
     msg.type = static_cast<int>(raw_value);
     switch (msg.type) {
         case CALLRESULT:
-            logser.println("got CALLRESULT");
             this->SetNext(new CallResult());
             break;
         case CALLERROR:
-            logser.println("got CALLERROR");
             this->SetNext(new CallError());
             break;
         case CALL:
-            logser.println("got CALL");
             this->SetNext(new Call());
             break;
         default:

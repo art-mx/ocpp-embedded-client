@@ -16,10 +16,13 @@ Msg CallResult::Handle(Msg & msg) {
     bool result = device_->client_->pending_calls_->GetCallActionWithId(msg.uid, msg.action);
     if (result) {
         // logser.printf("got result for id: %s payload: %s action: %s \r\n", id.c_str(), payload.c_str(), action_str.c_str());
-        MessageAction action = CallResultActionNamesMap[msg.action];
+        MessageAction action = MessageActionNamesMap[msg.action];
         switch (action) {
             case BOOT_NOTIFICATION:
                 this->SetNext(new BootNotificationConf());
+                break;
+            case STATUS_NOTIFICATION:
+                this->SetNext(new StatusNotificationConf());
                 break;
             // case CHANGE_AVAILABILITY:
             //     // handle this

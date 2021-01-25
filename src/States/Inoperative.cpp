@@ -13,6 +13,8 @@ AvailabilityStatus Inoperative::StateHandle_AvailabilityStatus(AvailabilityType 
       case INOPERATIVE:
       this->device_->ChangeState(new Inoperative());
         return AVAIL_STATUS_ACCEPTED;
+      default:
+        return AVAIL_STATUS_UNDEFINED;
   }
 }
 

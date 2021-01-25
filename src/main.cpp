@@ -1,24 +1,14 @@
 #include <Arduino.h>
 #include "Device.h" 
-#include "OCPP_Client.h"
 
-#define F091
-// #define F103
+#include "Connector.h"
 
-#ifdef F091
-  HardwareSerial logser(PA3, PA2);
-#endif
-  HardwareSerial comser(PA10, PA9);
+HardwareSerial logser(PA3, PA2);
+HardwareSerial comser(PA10, PA9);
 
-
-// #ifdef F091
-//   HardwareSerial logser(PA3, PA2);
-// #endif
-// HardwareSerial comser(PA10, PA9);
-// HardwareSerial Serial4(PC11, PC10);
 uint32_t currentTime;
 
-Device * device;
+Device * charge_point;
 OCPP_Client * client;
 
 void setup() {
@@ -29,28 +19,24 @@ void setup() {
   logser.begin(115200);
   comser.begin(115200);
   logser.println("Serial 2 up");
-  // Serial4.begin(9600);
+
   
-  device = new Device();
-  client = new OCPP_Client();
-  device->SetClient(client);
-  client->SetDevice(device);
-
-
-  delay(3000);
-  device->client_->SendBootNotification();
+  charge_point = new Device();
+  charge_point->AddConnector(new Connector(PB_0, 0));
+  // client = new OCPP_Client();
+  // charge_point->SetClient(client);
+  // client->SetDevice(device);
+  // charge_point->client_->SendBootNotification();
+  
 
 }
 
 void loop() {
-  device->Update();
-   
-  // client->Update();
+  charge_point->Update();
   
   if ((millis() - currentTime) > 5000) {
     logser.printf("\r\n\r\nruntime: %i\r\n", millis());
     currentTime = millis();
-    // device->client_->SendBootNotification();
-
+    // charge_point->client_->SendBootNotification();
   }
 }

@@ -10,6 +10,7 @@ void Initialization::StateHandle_RegistrationStatus(RegistrationStatus status) {
     case ACCEPTED:
         logser.println("got ACCEPTED RegistrationStatus");
         this->device_->ChangeState(new Operative);
+        this->device_->ReportConnectors();
         break;
     case PENDING:
         logser.println("got PENDING RegistrationStatus");

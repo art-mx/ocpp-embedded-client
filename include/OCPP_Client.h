@@ -3,7 +3,7 @@
 #include "mjson.h"
 #include "Requests/PendingCalls.h"
 #include "Requests/BootNotificationReq.h"
-// #include "Requests/BootNotificationConf.h"
+#include "Requests/StatusNotificationReq.h"
 #include "Requests/Message.h"
 #include "Requests/CallResult.h"
 #include "Requests/Call.h" 
@@ -26,16 +26,18 @@ class OCPP_Client {
     // static int Sender(const char* frame, int frame_len, void* privdata);
    
     Device * device_;
-    OCPP_Client();
+    OCPP_Client(Device * device);
     ~OCPP_Client();
     void SetDevice(Device * device);
     uint32_t counter = 0;
     void SendBootNotification();
+    void SendStatusNotification(int connector, string error, string status);
     void SendCall(PendingCall * call);
     void SendCallResult(Msg & msg); // TODO HERE
     void Update();
     PendingCalls * pending_calls_;
     BootNotificationReq * boot_notification_req;
+    StatusNotificationReq * status_notification_req;
     Message * message;
 
 };

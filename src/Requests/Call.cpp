@@ -19,7 +19,7 @@ Msg Call::Handle(Msg & msg) {
     logser.printf("Action not found in message %s\r\n", msg.raw.c_str());
     return msg;
     }
-    MessageAction action = CallActionNamesMap[msg.action];
+    MessageAction action = MessageActionNamesMap[msg.action];
         switch (action) {
             case CHANGE_AVAILABILITY:
                 logser.println("got CHANGE_AVAILABILITY");

@@ -5,27 +5,46 @@ extern HardwareSerial comser;
 extern HardwareSerial logser;
 
 
-OCPP_Client::OCPP_Client() { //(Device * device): device_(device){
+OCPP_Client::OCPP_Client(Device * device): device_(device) {
     jsonrpc_init(NULL, NULL);
     
     pending_calls_ = new PendingCalls();
     boot_notification_req = new BootNotificationReq();
-    
-
+    status_notification_req = new StatusNotificationReq();
     message = new Message();
     message->SetDevice(device_);
     // string msg = "[2,\"b39d8e77-7353-4534-949a-0966dd102661\",\"ChangeAvailability\",{\"connectorId\":0,\"type\":\"Operative\"}]";
     // message->Handle(msg);
-    // SendBootNotification();
-}
-
-void OCPP_Client::SetDevice(Device * device) {
-    device_ = device;
+    // comser.println("UP");
+    delay(1000);
+    SendBootNotification();
 }
 
 void OCPP_Client::SendBootNotification() {
+    // before sending check if websocket is up with comm module
     PendingCall *call = new PendingCall(boot_notification_req->Action, boot_notification_req->Payload());
     SendCall(call);
+}
+
+void OCPP_Client::SendStatusNotification(int connector, string error, string status) {
+    PendingCall *call = new PendingCall(status_notification_req->Action, status_notification_req->Payload(connector, error, status));
+    SendCall(call);
+}
+
+void OCPP_Client::SendCall(PendingCall* call) {
+    // send the call
+    mjson_printf(Sender, NULL, call->format, call->MessageTypeId, call->UniqueId.c_str(), call->Action.c_str(), call->Payload.c_str());
+    logser.printf("sent %s with id %s, payload: %s\r\n", call->Action.c_str(), call->UniqueId.c_str(), call->Payload.c_str());
+    pending_calls_->StoreCall(call);
+}
+
+void OCPP_Client::SendCallResult(Msg & msg) {
+    mjson_printf(Sender, NULL, "[%d, %Q, %s]\n", CALLRESULT, msg.uid.c_str(), msg.response_payload.c_str());
+    logser.printf("sent response with id %s, payload: %s\r\n", msg.uid.c_str(), msg.response_payload.c_str());
+}
+
+int Sender(const char *frame, int frame_len, void *privdata) {
+    return comser.write(frame, frame_len);
 }
 
 void OCPP_Client::Update(){
@@ -47,22 +66,5 @@ void OCPP_Client::Update(){
             msg.raw = raw;
             message->Handle(msg);
         }        
-    } 
-    
-}
-
-void OCPP_Client::SendCall(PendingCall* call) {
-    // send the call
-    mjson_printf(Sender, NULL, call->format, call->MessageTypeId, call->UniqueId.c_str(), call->Action.c_str(), call->Payload.c_str());
-    logser.printf("sent %s with id %s, payload: %s\r\n", call->Action.c_str(), call->UniqueId.c_str(), call->Payload.c_str());
-    pending_calls_->StoreCall(call);
-}
-
-void OCPP_Client::SendCallResult(Msg & msg) {
-    mjson_printf(Sender, NULL, "[%d, %Q, %s]\n", CALLRESULT, msg.uid.c_str(), msg.response_payload.c_str());
-    logser.printf("sent response with id %s, payload: %s\r\n", msg.uid.c_str(), msg.response_payload.c_str());
-}
-
-int Sender(const char *frame, int frame_len, void *privdata) {
-    return comser.write(frame, frame_len);
+    }  
 }

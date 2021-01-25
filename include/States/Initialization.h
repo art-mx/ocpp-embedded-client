@@ -7,7 +7,7 @@ class Initialization : public State {
   void StateHandle_RegistrationStatus(RegistrationStatus status);
 
   // when in initialization state we're not handling anything besides Registration
-  AvailabilityStatus StateHandle_AvailabilityStatus(AvailabilityType type) {}; 
+  AvailabilityStatus StateHandle_AvailabilityStatus(AvailabilityType type) {return AVAIL_STATUS_UNDEFINED;}; 
   void HandleTimerChange();
   const std::string GetStateName();
 };

@@ -15,6 +15,5 @@ Msg BootNotificationConf::Handle(Msg & msg) {
     }
     RegistrationStatus status = RegistrationStatusMap[status_str];
     device_->state_->StateHandle_RegistrationStatus(status);
-
     return msg;
 }   

@@ -5,7 +5,7 @@
 #include "JSONParser.h"
 #include "States/State.h"
 
-class BootNotificationConf : public AbstractHandler {
+class StatusNotificationConf : public AbstractHandler {
     public:   
         Msg Handle(Msg & msg) override;
 };

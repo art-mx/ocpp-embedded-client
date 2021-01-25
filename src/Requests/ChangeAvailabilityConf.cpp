@@ -6,7 +6,7 @@ using std::string;
 void ChangeAvailabilityConf::SetPayload(string & payload) {
   char * buf = NULL;
 
-  string status_str = AvailabilityStatusNamesMap[status_];
+  string status_str = AvailabilityStatusNames[status_];
   int n = mjson_printf(&mjson_print_dynamic_buf, &buf, payload_format,
               "status", status_str.c_str()
             );

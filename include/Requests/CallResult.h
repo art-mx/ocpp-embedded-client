@@ -8,6 +8,7 @@
 #include "Device.h"
 #include "OCPP_Client.h"
 #include "Requests/BootNotificationConf.h"
+#include "Requests/StatusNotificationConf.h"
 
 // class Device;
 extern HardwareSerial logser;
