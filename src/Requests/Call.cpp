@@ -16,7 +16,7 @@ Msg Call::Handle(Msg & msg) {
     }
 
     if(!GetString(msg.raw, UniqueId_key, msg.uid)) {
-    logser.printf("Action not found in message %s\r\n", msg.raw.c_str());
+    logser.printf("UniqueId not found in message %s\r\n", msg.raw.c_str());
     return msg;
     }
     MessageAction action = MessageActionNamesMap[msg.action];

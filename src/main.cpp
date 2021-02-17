@@ -1,6 +1,5 @@
 #include <Arduino.h>
 #include "Device.h" 
-
 #include "Connector.h"
 
 HardwareSerial logser(PA3, PA2);
