@@ -24,9 +24,6 @@ Msg CallResult::Handle(Msg & msg) {
             case STATUS_NOTIFICATION:
                 this->SetNext(new StatusNotificationConf());
                 break;
-            // case CHANGE_AVAILABILITY:
-            //     // handle this
-            //     break;
         }
         return AbstractHandler::Handle(msg);
     }   

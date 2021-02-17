@@ -4,12 +4,13 @@ using std::string;
 
 Msg Message::Handle(Msg & msg) {
 
-    double raw_value;
-    if (!mjson_get_number(msg.raw.c_str(), msg.raw.length(), MessageTypeId_key, &raw_value)) {
+    int type;
+    if (!GetInteger(msg.raw, MessageTypeId_key, &type)) {
         logser.println("message type not found");
         return msg;
     }
-    msg.type = static_cast<int>(raw_value);
+
+    msg.type = static_cast<int>(type);
     switch (msg.type) {
         case CALLRESULT:
             this->SetNext(new CallResult());
