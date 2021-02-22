@@ -10,4 +10,4 @@ Some C++ STL components are used such as map and vector.
 
 ### Known Issues
 
-There is a problem related to memory management when creating and deleting message handlers.
+---
