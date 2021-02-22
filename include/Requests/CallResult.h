@@ -7,15 +7,15 @@
 #include "PendingCalls.h"
 #include "Device.h"
 #include "OCPP_Client.h"
-#include "Requests/BootNotificationConf.h"
-#include "Requests/StatusNotificationConf.h"
 
-// class Device;
+
+class BootNotificationConf;
+class StatusNotificationConf;
 extern HardwareSerial logser;
 
 class CallResult : public AbstractHandler {
   public:
-
+    CallResult();
     /*
     * [<MessageTypeId>, "<MessageId>", {<Payload>}]
     */
@@ -24,5 +24,9 @@ class CallResult : public AbstractHandler {
     const char * UniqueId_key = "$[1]";
     const char * Payload_key = "$[2]";
     Msg Handle(Msg & msg) override;
+
+  private:
+    BootNotificationConf * BootNotificationConf_;
+    StatusNotificationConf * StatusNotificationConf_;
 };
 

@@ -1,4 +1,11 @@
 #include "Requests/CallResult.h"
+#include "Requests/BootNotificationConf.h"
+#include "Requests/StatusNotificationConf.h"
+
+CallResult::CallResult() {
+    BootNotificationConf_ = new BootNotificationConf();
+    StatusNotificationConf_ = new StatusNotificationConf();
+}
 
 Msg CallResult::Handle(Msg & msg) {
     logser.println("handling CALLRESULT");
@@ -19,10 +26,10 @@ Msg CallResult::Handle(Msg & msg) {
         MessageAction action = MessageActionNamesMap[msg.action];
         switch (action) {
             case BOOT_NOTIFICATION:
-                this->SetNext(new BootNotificationConf());
+                this->SetNext(BootNotificationConf_);
                 break;
             case STATUS_NOTIFICATION:
-                this->SetNext(new StatusNotificationConf());
+                this->SetNext(StatusNotificationConf_);
                 break;
         }
         return AbstractHandler::Handle(msg);

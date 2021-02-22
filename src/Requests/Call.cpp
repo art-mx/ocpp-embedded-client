@@ -1,5 +1,9 @@
 #include "Requests/Call.h"
+#include "Requests/ChangeAvailabilityReq.h"
 
+Call::Call() {
+    ChangeAvailabilityReq_ = new ChangeAvailabilityReq();
+}
 
 Msg Call::Handle(Msg & msg) {
 
@@ -23,7 +27,7 @@ Msg Call::Handle(Msg & msg) {
         switch (action) {
             case CHANGE_AVAILABILITY:
                 logser.println("got CHANGE_AVAILABILITY");
-                this->SetNext(new ChangeAvailabilityReq());
+                this->SetNext(ChangeAvailabilityReq_);
                 break;
             default:
                 logser.printf("unknown Action: %s", msg.action);

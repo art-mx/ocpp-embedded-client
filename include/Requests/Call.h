@@ -8,7 +8,8 @@
 #include "Requests/AbstractHandler.h"
 #include "JSONParser.h"
 #include "Device.h"
-#include "Requests/ChangeAvailabilityReq.h"
+
+class ChangeAvailabilityReq;
 
 using namespace std;
 #define MAX_CALL_NUM 10 // number of calls to store
@@ -17,7 +18,8 @@ extern HardwareSerial logser;
 
 class Call : public AbstractHandler {
     public:
-        // Call() {};
+        Call();
+
         Msg Handle(Msg & msg) override;
         /*
         * [<MessageTypeId>, "<UniqueId>", "<Action>", {<Payload>}]
@@ -34,6 +36,8 @@ class Call : public AbstractHandler {
             ++i;
             return to_string(i);
         }
+    private:
+        ChangeAvailabilityReq * ChangeAvailabilityReq_;
 };
 
 

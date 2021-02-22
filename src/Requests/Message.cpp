@@ -1,6 +1,15 @@
 #include "Requests/Message.h"
+#include "Requests/CallResult.h"
+#include "Requests/Call.h" 
+#include "Requests/CallError.h"
 
 using std::string;
+
+Message::Message(){
+    call_ = new Call();
+    callResult_ = new CallResult();
+    callerror_ = new CallError();
+}
 
 Msg Message::Handle(Msg & msg) {
 
@@ -13,13 +22,13 @@ Msg Message::Handle(Msg & msg) {
     msg.type = static_cast<int>(type);
     switch (msg.type) {
         case CALLRESULT:
-            this->SetNext(new CallResult());
+            this->SetNext(callResult_);
             break;
         case CALLERROR:
-            this->SetNext(new CallError());
+            this->SetNext(callerror_);
             break;
         case CALL:
-            this->SetNext(new Call());
+            this->SetNext(call_);
             break;
         default:
             logser.println("got UNDEFINED MessageType\r\n");

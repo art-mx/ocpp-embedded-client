@@ -19,23 +19,17 @@ void setup() {
   comser.begin(115200);
   logser.println("Serial 2 up");
 
-  
   charge_point = new Device();
   charge_point->AddConnector(new Connector(PB_0, 0));
-  // client = new OCPP_Client();
-  // charge_point->SetClient(client);
-  // client->SetDevice(device);
-  // charge_point->client_->SendBootNotification();
-  
 
 }
 
 void loop() {
   charge_point->Update();
   
-  if ((millis() - currentTime) > 5000) {
+  if ((millis() - currentTime) > 1000) {
     logser.printf("\r\n\r\nruntime: %i\r\n", millis());
     currentTime = millis();
-    // charge_point->client_->SendBootNotification();
+    charge_point->ReportConnectors();
   }
 }
