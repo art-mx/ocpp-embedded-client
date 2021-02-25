@@ -11,6 +11,8 @@
 
 class BootNotificationConf;
 class StatusNotificationConf;
+class StartTransactionConf;
+
 extern HardwareSerial logser;
 
 class CallResult : public AbstractHandler {
@@ -28,5 +30,6 @@ class CallResult : public AbstractHandler {
   private:
     BootNotificationConf * BootNotificationConf_;
     StatusNotificationConf * StatusNotificationConf_;
+    StartTransactionConf * StartTransactionConf_;
 };
 

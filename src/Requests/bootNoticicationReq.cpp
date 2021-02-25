@@ -2,7 +2,7 @@
 using std::string;
 
 string BootNotificationReq::Payload() {
-  chargePointModel_ = "X"; // TODO
+  chargePointModel_ = "A"; // TODO
   chargePointVendor_ = "Y"; // TODO
   char * buf = NULL;
   mjson_printf(&mjson_print_dynamic_buf, &buf, payload_format,

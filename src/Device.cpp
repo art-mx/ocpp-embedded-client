@@ -5,7 +5,6 @@
 Device::Device() {
   this->ChangeState(new Initialization);
   this->SetClient(new OCPP_Client(this));
-  // this->client_->SetDevice(this);
 }
 
 void Device::SetClient(OCPP_Client * client){
@@ -16,6 +15,10 @@ void Device::AddConnector(Connector * connector) {
   connector_list_.emplace_back(connector);
 }
 
+uint8_t Device::NumConnectors() {
+  return connector_list_.size();
+}
+
 void Device::ReportConnectors() {
     if (connector_list_.size()>0) {
         for (unsigned i=0; i<connector_list_.size(); ++i) {
@@ -23,7 +26,9 @@ void Device::ReportConnectors() {
           this->client_->SendStatusNotification(connector_list_[i]->id, 
                                           ChargePointErrorCodeNames[CP_ERROR_NoError], 
                                           ChargePointStatusNames[CP_STATUS_Available]);
+          delay(100);
         }
+        
     }
 }
 

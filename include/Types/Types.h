@@ -53,21 +53,17 @@ enum MessageAction {
     UNDEFINED_ACTION = 0,
     BOOT_NOTIFICATION,
     CHANGE_AVAILABILITY,
-    STATUS_NOTIFICATION
+    STATUS_NOTIFICATION,
+    REMOTE_START_TRANSACTION,
+    START_TRANSACTION
 };
-
-// static std::map<std::string, MessageAction> CallResultActionNamesMap = {
-//    {"BootNotification", BOOT_NOTIFICATION}
-// };
-
-// static std::map<std::string, MessageAction> CallActionNamesMap = {
-//    {"ChangeAvailability", CHANGE_AVAILABILITY}
-// };
 
 static std::map<std::string, MessageAction> MessageActionNamesMap = {
     {"BootNotification", BOOT_NOTIFICATION},
     {"ChangeAvailability", CHANGE_AVAILABILITY},
-    {"StatusNotification", STATUS_NOTIFICATION}
+    {"StatusNotification", STATUS_NOTIFICATION},
+    {"RemoteStartTransaction", REMOTE_START_TRANSACTION},
+    {"StartTransaction", START_TRANSACTION}
 };
 
 enum AvailabilityType {
@@ -154,3 +150,31 @@ static const string ChargePointErrorCodeNames[16] = {
     "WeakSignal"
 };
 
+enum RemoteStartStopStatus {
+    REMOTE_STATUS_UNDEFINED = 0,
+    REMOTE_STATUS_ACCEPTED = 1,
+    REMOTE_STATUS_REJECTED = 2
+};
+static const string RemoteStartStopStatusNames[3] = {
+    "Undefined",
+    "Accepted",
+    "Rejected"
+};
+
+enum AuthorizationStatus {
+    AUTH_STATUS_UNDEFINED = 0,
+    AUTH_STATUS_ACCEPTED,
+    AUTH_STATUS_BLOCKED,
+    AUTH_STATUS_EXPIRED,
+    AUTH_STATUS_INVALID,
+    AUTH_STATUS_CONCURRENTTX
+};
+
+
+static std::map<std::string, AuthorizationStatus> AuthorizationStatusMap = {
+   {"Accepted", AUTH_STATUS_ACCEPTED},
+   {"Blocked", AUTH_STATUS_BLOCKED},
+   {"Expired", AUTH_STATUS_EXPIRED},
+   {"Invalid", AUTH_STATUS_INVALID},
+   {"ConcurrentTx", AUTH_STATUS_CONCURRENTTX}
+};

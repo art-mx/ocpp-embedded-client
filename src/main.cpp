@@ -3,7 +3,9 @@
 #include "Connector.h"
 
 HardwareSerial logser(PA3, PA2);
-HardwareSerial comser(PA10, PA9);
+
+//HardwareSerial comser(PA10, PA9); //for awd
+HardwareSerial comser(PC11, PC10);
 
 uint32_t currentTime;
 
@@ -21,15 +23,15 @@ void setup() {
 
   charge_point = new Device();
   charge_point->AddConnector(new Connector(PB_0, 0));
-
+  // charge_point->AddConnector(new Connector(PB_1, 1));
 }
 
 void loop() {
   charge_point->Update();
   
-  if ((millis() - currentTime) > 1000) {
+  if ((millis() - currentTime) > 3000) {
     logser.printf("\r\n\r\nruntime: %i\r\n", millis());
     currentTime = millis();
-    charge_point->ReportConnectors();
+    //charge_point->ReportConnectors();
   }
 }

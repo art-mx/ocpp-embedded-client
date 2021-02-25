@@ -15,6 +15,7 @@ class Device {
         ~Device();
         void SetClient(OCPP_Client * client);
         void AddConnector(Connector * connector);
+        uint8_t NumConnectors();
         void ReportConnectors();
         void ChangeState(State * state);
         void Update();

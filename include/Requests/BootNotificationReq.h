@@ -5,7 +5,7 @@ extern "C" {
   #include "mjson.h"
 }
 using std::string;
-// #include "Requests/AbstractHandler.h"
+
 
 class BootNotificationReq {
     private:
@@ -28,5 +28,5 @@ class BootNotificationReq {
         * {"chargePointModel": "modelX", "chargePointVendor": "vendorX"}
         */
         const char * payload_format = "{%Q: %Q, %Q: %Q}";
-        // string & Handle(string & msg);
+
 };

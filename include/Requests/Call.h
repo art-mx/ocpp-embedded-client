@@ -10,6 +10,7 @@
 #include "Device.h"
 
 class ChangeAvailabilityReq;
+class RemoteStartTransactionReq;
 
 using namespace std;
 #define MAX_CALL_NUM 10 // number of calls to store
@@ -38,6 +39,7 @@ class Call : public AbstractHandler {
         }
     private:
         ChangeAvailabilityReq * ChangeAvailabilityReq_;
+        RemoteStartTransactionReq * RemoteStartTransactionReq_;
 };
 
 

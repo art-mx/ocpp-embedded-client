@@ -14,5 +14,4 @@ class StatusNotificationReq {
        const char * payload_format = "{%Q: %d, %Q: %Q, %Q: %Q}\n";
        const string Action = "StatusNotification";
 
-
 };

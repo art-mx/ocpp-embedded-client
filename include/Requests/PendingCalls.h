@@ -19,6 +19,8 @@ class PendingCall {
         string Action;
         string UniqueId;
         string Payload;
+        uint32_t timestamp_;
+        int retries = 0;
         /*
         * [<MessageTypeId>, "<UniqueId>", "<Action>", {<Payload>}]
         */
@@ -33,15 +35,18 @@ class PendingCall {
         }
 };
 
+class OCPP_Client;
+
 class PendingCalls {
     private:
         vector<PendingCall *> call_list_;
         // map<string, string> call_map_;
     public:
-        PendingCalls() {}
+        PendingCalls(OCPP_Client * client): client_(client) {}
         ~PendingCalls() = default;
         void StoreCall(PendingCall* call);
         bool GetCallActionWithId(string & id, string & action);
         void Update();
+        OCPP_Client * client_;
 };
 

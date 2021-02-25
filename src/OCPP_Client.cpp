@@ -8,15 +8,15 @@ extern HardwareSerial logser;
 OCPP_Client::OCPP_Client(Device * device): device_(device) {
     jsonrpc_init(NULL, NULL);
     
-    pending_calls_ = new PendingCalls();
+    pending_calls_ = new PendingCalls(this);
     boot_notification_req = new BootNotificationReq();
     status_notification_req = new StatusNotificationReq();
+    start_transaction_req = new StartTransactionReq();
     message = new Message();
     message->SetDevice(device_);
     // string msg = "[2,\"b39d8e77-7353-4534-949a-0966dd102661\",\"ChangeAvailability\",{\"connectorId\":0,\"type\":\"Operative\"}]";
     // message->Handle(msg);
     // comser.println("UP");
-    delay(1000);
     SendBootNotification();
 }
 
@@ -31,11 +31,22 @@ void OCPP_Client::SendStatusNotification(int connector, string error, string sta
     SendCall(call);
 }
 
+void OCPP_Client::SendStartTransaction(int connector, string idTag, int meterStart, string timestamp) {
+    PendingCall *call = new PendingCall(start_transaction_req->Action, start_transaction_req->Payload(connector, idTag, meterStart, timestamp));
+    SendCall(call);
+}
+
 void OCPP_Client::SendCall(PendingCall* call) {
     // send the call
     mjson_printf(Sender, NULL, call->format, call->MessageTypeId, call->UniqueId.c_str(), call->Action.c_str(), call->Payload.c_str());
     logser.printf("sent %s with id %s, payload: %s\r\n", call->Action.c_str(), call->UniqueId.c_str(), call->Payload.c_str());
     pending_calls_->StoreCall(call);
+}
+
+void OCPP_Client::ReSendCall(PendingCall* call) {
+    // send the call
+    mjson_printf(Sender, NULL, call->format, call->MessageTypeId, call->UniqueId.c_str(), call->Action.c_str(), call->Payload.c_str());
+    logser.printf("sent %s with id %s, payload: %s\r\n", call->Action.c_str(), call->UniqueId.c_str(), call->Payload.c_str());
 }
 
 void OCPP_Client::SendCallResult(Msg & msg) {

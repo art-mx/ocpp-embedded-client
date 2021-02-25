@@ -1,10 +1,12 @@
 #include "Requests/CallResult.h"
 #include "Requests/BootNotificationConf.h"
 #include "Requests/StatusNotificationConf.h"
+#include "Requests/StartTransactionConf.h"
 
 CallResult::CallResult() {
     BootNotificationConf_ = new BootNotificationConf();
     StatusNotificationConf_ = new StatusNotificationConf();
+    StartTransactionConf_ = new StartTransactionConf();
 }
 
 Msg CallResult::Handle(Msg & msg) {
@@ -31,6 +33,12 @@ Msg CallResult::Handle(Msg & msg) {
             case STATUS_NOTIFICATION:
                 this->SetNext(StatusNotificationConf_);
                 break;
+            case START_TRANSACTION:
+                this->SetNext(StartTransactionConf_);
+                break;
+            default:
+                logser.println("Unknown action");
+                return msg;
         }
         return AbstractHandler::Handle(msg);
     }   

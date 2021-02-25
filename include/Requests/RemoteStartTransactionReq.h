@@ -7,7 +7,12 @@
 #include "States/State.h"
 #include "OCPP_Client.h"
 
-class ChangeAvailabilityReq: public AbstractHandler {
+class RemoteStartTransactionConf;
+
+class RemoteStartTransactionReq: public AbstractHandler {
     public:
+        RemoteStartTransactionReq();
         Msg Handle(Msg & msg) override;
+    private:
+        RemoteStartTransactionConf * RemoteStartTransactionConf_;
 };

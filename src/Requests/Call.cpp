@@ -1,8 +1,10 @@
 #include "Requests/Call.h"
 #include "Requests/ChangeAvailabilityReq.h"
+#include "Requests/RemoteStartTransactionReq.h"
 
 Call::Call() {
     ChangeAvailabilityReq_ = new ChangeAvailabilityReq();
+    RemoteStartTransactionReq_ = new RemoteStartTransactionReq();
 }
 
 Msg Call::Handle(Msg & msg) {
@@ -24,15 +26,18 @@ Msg Call::Handle(Msg & msg) {
     return msg;
     }
     MessageAction action = MessageActionNamesMap[msg.action];
-        switch (action) {
-            case CHANGE_AVAILABILITY:
-                logser.println("got CHANGE_AVAILABILITY");
-                this->SetNext(ChangeAvailabilityReq_);
-                break;
-            default:
-                logser.printf("unknown Action: %s", msg.action);
-                return msg;
-        }
+    logser.printf("got %s , id=%i", msg.action.c_str(), action);
+    switch (action) {
+        case CHANGE_AVAILABILITY:
+            this->SetNext(ChangeAvailabilityReq_);
+            break;
+        case REMOTE_START_TRANSACTION:
+            this->SetNext(RemoteStartTransactionReq_);
+            break;
+        default:
+            logser.printf("unknown Action: %s\r\n", msg.action.c_str());
+            return msg;
+    }
 
     return AbstractHandler::Handle(msg);
 }

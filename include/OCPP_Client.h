@@ -4,6 +4,7 @@
 #include "Requests/PendingCalls.h"
 #include "Requests/BootNotificationReq.h"
 #include "Requests/StatusNotificationReq.h"
+#include "Requests/StartTransactionReq.h"
 #include "Requests/Message.h"
 #include "Requests/CallResult.h"
 #include "Requests/Call.h" 
@@ -32,12 +33,15 @@ class OCPP_Client {
     uint32_t counter = 0;
     void SendBootNotification();
     void SendStatusNotification(int connector, string error, string status);
+    void SendStartTransaction(int connector, string idTag, int meterStart, string timestamp);
     void SendCall(PendingCall * call);
+    void ReSendCall(PendingCall* call);
     void SendCallResult(Msg & msg); // TODO HERE
     void Update();
     PendingCalls * pending_calls_;
     BootNotificationReq * boot_notification_req;
     StatusNotificationReq * status_notification_req;
+    StartTransactionReq * start_transaction_req;
     Message * message;
 
 };
