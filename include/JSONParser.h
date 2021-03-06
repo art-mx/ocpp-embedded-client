@@ -13,3 +13,4 @@ bool GetString(const string & msg, const char * key, string & value);
 
 int check_if_frame_is_complete(char * buf, int len, string & frame);
 
+bool FindKey(const string & msg, const char * key);

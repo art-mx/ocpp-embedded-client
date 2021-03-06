@@ -1,9 +1,15 @@
 #include "Requests/BootNotificationConf.h"
+#include "rtc.h"
+
 
 Msg BootNotificationConf::Handle(Msg & msg) {
 
     string currentTime;
-    GetString(msg.payload, "$.currentTime", currentTime); //TODO
+    if(!GetString(msg.payload, "$.currentTime", currentTime)) {
+        logser.printf("'currentTime' key not found in payload %s\r\n", msg.payload.c_str());
+        return msg;
+    }
+    adjust_rtc(currentTime);
 
     int interval;
     GetInteger(msg.payload, "$.interval", &interval); //TODO

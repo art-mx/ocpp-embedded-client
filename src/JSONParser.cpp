@@ -25,6 +25,13 @@ bool GetString(const string & msg, const char * key, string & value) {
   return false;
 }
 
+bool FindKey(const string & msg, const char * key) {
+    const char *p;
+    int sz;
+    if (mjson_find(msg.c_str(), msg.length(), key, &p, &sz) > 0) return true;
+    else return false;
+}
+
 bool GetObject(string & msg, const char * key, string & value) {
     const char *p;
     int n;
@@ -36,7 +43,6 @@ bool GetObject(string & msg, const char * key, string & value) {
         return false;
     }
 }
-
 
 int check_if_frame_is_complete(char * buf, int len, string & frame) {
     int n = mjson(buf, len, NULL, NULL);

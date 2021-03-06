@@ -15,16 +15,17 @@ class Device {
         ~Device();
         void SetClient(OCPP_Client * client);
         void AddConnector(Connector * connector);
+        Connector * GetConnector(int id);
         uint8_t NumConnectors();
         void ReportConnectors();
+        void ReportConnectorStateChange(int id);
         void ChangeState(State * state);
+        int GetMeterValueForTransaction(int transactionId){return 1000;} //TODO
         void Update();
         OCPP_Client * client_{nullptr};
         State * state_{nullptr};
     private:
         std::vector<Connector *> connector_list_;
-
-        // Connector connector_list[4];
     private:
         
 };

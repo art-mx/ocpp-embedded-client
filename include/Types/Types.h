@@ -55,7 +55,9 @@ enum MessageAction {
     CHANGE_AVAILABILITY,
     STATUS_NOTIFICATION,
     REMOTE_START_TRANSACTION,
-    START_TRANSACTION
+    START_TRANSACTION,
+    REMOTE_STOP_TRANSACTION,
+    STOP_TRANSACTION
 };
 
 static std::map<std::string, MessageAction> MessageActionNamesMap = {
@@ -63,7 +65,9 @@ static std::map<std::string, MessageAction> MessageActionNamesMap = {
     {"ChangeAvailability", CHANGE_AVAILABILITY},
     {"StatusNotification", STATUS_NOTIFICATION},
     {"RemoteStartTransaction", REMOTE_START_TRANSACTION},
-    {"StartTransaction", START_TRANSACTION}
+    {"StartTransaction", START_TRANSACTION},
+    {"RemoteStopTransaction", REMOTE_STOP_TRANSACTION},
+    {"StopTransaction", STOP_TRANSACTION}
 };
 
 enum AvailabilityType {
@@ -170,11 +174,40 @@ enum AuthorizationStatus {
     AUTH_STATUS_CONCURRENTTX
 };
 
-
 static std::map<std::string, AuthorizationStatus> AuthorizationStatusMap = {
    {"Accepted", AUTH_STATUS_ACCEPTED},
    {"Blocked", AUTH_STATUS_BLOCKED},
    {"Expired", AUTH_STATUS_EXPIRED},
    {"Invalid", AUTH_STATUS_INVALID},
    {"ConcurrentTx", AUTH_STATUS_CONCURRENTTX}
+};
+
+enum StopTransactionReason {
+    STOP_TRANS_UNDEFINED = 0,
+    STOP_TRANS_DEAUTHORIZED,
+    STOP_TRANS_EMERGENCY_STOP,
+    STOP_TRANS_EVDISCONNECTED,
+    STOP_TRANS_HARDRESET,
+    STOP_TRANS_LOCAL,
+    STOP_TRANS_OTHER,
+    STOP_TRANS_POWERLOSS,
+    STOP_TRANS_REBOOT,
+    STOP_TRANS_REMOTE,
+    STOP_TRANS_SOFTRESET,
+    STOP_TRANS_UNLOCKCOMMAND
+};
+
+static const string StopTransactionReasonNames[12] = {
+    "Undefined",
+    "DeAuthorized",
+    "EmergencyStop",
+    "EVDisconnected",
+    "HardReset",
+    "Local",
+    "Other",
+    "PowerLoss",
+    "Reboot",
+    "Remote",
+    "SoftReset",
+    "UnlockCommand"
 };

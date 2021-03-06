@@ -7,21 +7,17 @@ extern HardwareSerial logser;
 
 OCPP_Client::OCPP_Client(Device * device): device_(device) {
     jsonrpc_init(NULL, NULL);
-    
     pending_calls_ = new PendingCalls(this);
     boot_notification_req = new BootNotificationReq();
     status_notification_req = new StatusNotificationReq();
     start_transaction_req = new StartTransactionReq();
+    stop_transaction_req = new StopTransactionReq();
     message = new Message();
     message->SetDevice(device_);
-    // string msg = "[2,\"b39d8e77-7353-4534-949a-0966dd102661\",\"ChangeAvailability\",{\"connectorId\":0,\"type\":\"Operative\"}]";
-    // message->Handle(msg);
-    // comser.println("UP");
     SendBootNotification();
 }
 
 void OCPP_Client::SendBootNotification() {
-    // before sending check if websocket is up with comm module
     PendingCall *call = new PendingCall(boot_notification_req->Action, boot_notification_req->Payload());
     SendCall(call);
 }
@@ -33,6 +29,11 @@ void OCPP_Client::SendStatusNotification(int connector, string error, string sta
 
 void OCPP_Client::SendStartTransaction(int connector, string idTag, int meterStart, string timestamp) {
     PendingCall *call = new PendingCall(start_transaction_req->Action, start_transaction_req->Payload(connector, idTag, meterStart, timestamp));
+    SendCall(call);
+}
+
+void OCPP_Client::SendStopTransaction(int meterStop, string timestamp, int transactionId, StopTransactionReason reason) {
+    PendingCall *call = new PendingCall(stop_transaction_req->Action, stop_transaction_req->Payload(meterStop, timestamp, transactionId, reason));
     SendCall(call);
 }
 

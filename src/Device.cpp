@@ -28,8 +28,14 @@ void Device::ReportConnectors() {
                                           ChargePointStatusNames[CP_STATUS_Available]);
           delay(100);
         }
-        
     }
+}
+
+void Device::ReportConnectorStateChange(int id) {
+  this->client_->SendStatusNotification(connector_list_[id]->id, 
+                                        ChargePointErrorCodeNames[connector_list_[id]->error_], 
+                                        ChargePointStatusNames[connector_list_[id]->status_]);
+
 }
 
 void Device::ChangeState(State *state) {
@@ -41,4 +47,9 @@ void Device::ChangeState(State *state) {
 
 void Device::Update() {
   client_->Update();
+}
+
+Connector * Device::GetConnector(int id) {
+  // TODO check if connector exists
+  return connector_list_[id];
 }

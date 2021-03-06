@@ -1,10 +1,12 @@
 #include "Requests/Call.h"
 #include "Requests/ChangeAvailabilityReq.h"
 #include "Requests/RemoteStartTransactionReq.h"
+#include "Requests/RemoteStopTransactionReq.h"
 
 Call::Call() {
     ChangeAvailabilityReq_ = new ChangeAvailabilityReq();
     RemoteStartTransactionReq_ = new RemoteStartTransactionReq();
+    RemoteStopTransactionReq_ = new RemoteStopTransactionReq();
 }
 
 Msg Call::Handle(Msg & msg) {
@@ -33,6 +35,9 @@ Msg Call::Handle(Msg & msg) {
             break;
         case REMOTE_START_TRANSACTION:
             this->SetNext(RemoteStartTransactionReq_);
+            break;
+        case REMOTE_STOP_TRANSACTION:
+            this->SetNext(RemoteStopTransactionReq_);
             break;
         default:
             logser.printf("unknown Action: %s\r\n", msg.action.c_str());

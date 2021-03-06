@@ -11,6 +11,7 @@
 
 class ChangeAvailabilityReq;
 class RemoteStartTransactionReq;
+class RemoteStopTransactionReq;
 
 using namespace std;
 #define MAX_CALL_NUM 10 // number of calls to store
@@ -40,6 +41,7 @@ class Call : public AbstractHandler {
     private:
         ChangeAvailabilityReq * ChangeAvailabilityReq_;
         RemoteStartTransactionReq * RemoteStartTransactionReq_;
+        RemoteStopTransactionReq * RemoteStopTransactionReq_;
 };
 
 

@@ -4,6 +4,7 @@
 #include "Types/Types.h"
 #include "JSONParser.h"
 #include "States/State.h"
+#include "OCPP_Client.h"
 
 class StartTransactionConf : public AbstractHandler {
     public:   
